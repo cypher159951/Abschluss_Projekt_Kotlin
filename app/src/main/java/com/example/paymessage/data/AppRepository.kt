@@ -39,6 +39,7 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
             GlobalScope.launch {
                 Log.d(ContentValues.TAG, "getItems Data: $itemData")
                 newsDatabase.dao.insertall(itemData)
+
             }
         } catch (e: java.lang.Exception) {
             Log.d(ContentValues.TAG, "Error inserting facts from API into database: $e")

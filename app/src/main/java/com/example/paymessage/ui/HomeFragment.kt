@@ -5,12 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.paymessage.databinding.FragmentHomeBinding
 
 
 class HomeFragment : Fragment() {
 
-   //private val NewsViewModel: ContactsViewModel by viewModels()
+   private val NewsViewModel: NewsViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(

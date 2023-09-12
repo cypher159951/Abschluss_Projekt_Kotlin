@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import com.example.paymessage.Adapter.NewsAdapter
 import com.example.paymessage.databinding.FragmentHomeBinding
 
 
@@ -25,6 +27,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.newsListRV.setHasFixedSize(true)
+        NewsViewModel.newsDataList.observe(viewLifecycleOwner){
+            binding.newsListRV.adapter = NewsAdapter(NewsViewModel,it, NavController(requireContext()) )
+        }
 
 
     }

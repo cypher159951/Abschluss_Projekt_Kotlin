@@ -37,10 +37,8 @@ class NewsAdapter(
         holder.binding.contactCV.setOnClickListener {
             //Mit der id zum DetailFragment navigieren
             holder.itemView.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(dataset[position])
+                .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment (dataset[position].id!!))
         }
-
-
 
     }
 }

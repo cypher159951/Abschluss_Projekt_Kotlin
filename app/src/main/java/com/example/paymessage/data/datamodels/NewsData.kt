@@ -9,6 +9,7 @@ data class NewsData(
     val id: Long = 0,
 
     val news: List<News>,
+
    // val teaserImage: List<teaserImage>,
 
     var isLiked: Boolean = false

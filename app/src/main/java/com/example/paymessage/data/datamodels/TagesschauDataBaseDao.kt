@@ -12,23 +12,23 @@ import com.example.paymessage.data.database.Tagesschau
 interface TagesschauDataBaseDao {
 
     @Insert
-    fun insertall(news: NewsData)
+    fun insertall(news: News)
 
     @Update
-    fun updateItem(news: NewsData)
+    fun updateItem(news: News)
 
     @Delete
-    fun deleteItem(news: NewsData)
+    fun deleteItem(news: News)
 
     @Query("SELECT * FROM tagesschau WHERE id = :itemId")
-    fun getItemById(itemId: Long): NewsData
+    fun getItemById(itemId: Long): News
 
 
     @Query("SELECT * FROM tagesschau WHERE isLiked =1")
-    fun getLiked(): LiveData<List<NewsData>>
+    fun getLiked(): LiveData<List<News>>
 
     @Query("SELECT * FROM tagesschau")
-    fun getAllItems(): LiveData<List<NewsData>>
+    fun getAllItems(): LiveData<List<News>>
 
 
 }

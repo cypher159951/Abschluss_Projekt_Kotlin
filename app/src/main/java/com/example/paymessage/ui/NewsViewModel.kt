@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.paymessage.api.TagesschauApi
 import com.example.paymessage.data.AppRepository
 import com.example.paymessage.data.database.Tagesschau
+import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.data.datamodels.NewsData
 import com.example.paymessage.data.datamodels.TagesschauDataBase
 import kotlinx.coroutines.Dispatchers
@@ -22,9 +23,9 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
 
 
-    val newsDataList: LiveData<List<NewsData>> = repository.getAll()
+    val newsDataList: LiveData<List<News>> = repository.getAll()
 
-    val favoriteDataList: LiveData<List<NewsData>> = repository.getliked()
+    val favoriteDataList: LiveData<List<News>> = repository.getliked()
 
     val news = repository.news
 
@@ -42,7 +43,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun insertDataFromApi(itemData: NewsData) {
+    fun insertDataFromApi(itemData: News) {
         viewModelScope.launch {
             repository.insertNewsFromApi(itemData)
         }
@@ -56,7 +57,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun updateLikestatusInDb(isliked: NewsData){
+    fun updateLikestatusInDb(isliked: News){
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateLikeStatus(isliked)
         }

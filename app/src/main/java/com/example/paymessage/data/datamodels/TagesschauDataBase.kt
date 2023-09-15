@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.paymessage.data.database.Converter
 
-@Database(entities = [NewsData::class], version = 1)
+@Database(entities = [News::class], version = 1)
 @TypeConverters(Converter::class)
 abstract class TagesschauDataBase : RoomDatabase() {
     abstract val dao: TagesschauDataBaseDao

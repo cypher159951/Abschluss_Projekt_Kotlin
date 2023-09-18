@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paymessage.data.datamodels.News
-import com.example.paymessage.data.datamodels.NewsData
 import com.example.paymessage.databinding.NewsItemBinding
 import com.example.paymessage.ui.HomeFragmentDirections
 import com.example.paymessage.ui.NewsViewModel
@@ -33,7 +32,8 @@ class NewsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataset[position]
-       // holder.binding.newsTV.setText(item.news.toString())
+        holder.binding.newsTV.setText(item.title)
+
 
         holder.binding.contactCV.setOnClickListener {
             //Mit der id zum DetailFragment navigieren

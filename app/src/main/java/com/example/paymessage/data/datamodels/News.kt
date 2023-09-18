@@ -14,12 +14,20 @@ data class News(
     val externalId: String,
     val title: String,
     val date: String,
-    var isLiked: Boolean = false
+    var isLiked: Boolean = false,
 
 
 )
 
 data class teaserImage(
     val alttext: String,
+    val imageVariants: List<ImageVariant>
+
     )
 
+data class ImageVariant(
+    val url: String,
+    val width: Int,
+    val height: Int,
+    val format: String
+)

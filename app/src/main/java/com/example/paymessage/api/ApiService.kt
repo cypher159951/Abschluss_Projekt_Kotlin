@@ -1,6 +1,5 @@
 package com.example.paymessage.api
 
-import com.example.paymessage.data.database.Tagesschau
 import com.example.paymessage.data.datamodels.NewsData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

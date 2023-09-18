@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 data class NewsData(
     val news: List<News>,
 
-   // val teaserImage: List<teaserImage>,
+    val teaserImage: List<teaserImage>,
 
     var isLiked: Boolean = false
 )

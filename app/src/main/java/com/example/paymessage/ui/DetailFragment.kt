@@ -6,6 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.paymessage.api.TagesschauApi
+import com.example.paymessage.data.AppRepository
+import com.example.paymessage.data.database.Tagesschau
+import com.example.paymessage.data.datamodels.TagesschauDataBase
 import com.example.paymessage.databinding.FragmentDetailBinding
 
 
@@ -15,6 +19,8 @@ class DetailFragment : Fragment() {
     private val viewModel: NewsViewModel by viewModels()
 
     private lateinit var binding: FragmentDetailBinding
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +33,22 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments?.let {
+            val id = it.getLong("id")
+            viewModel.loadNewsDetail(id)
+            viewModel.newsDetail.observe(viewLifecycleOwner) {
+                if (it.content.isNotEmpty()){
+                    binding.newsDetailTV.text = it.content[0].value
+                    var text: String =""
+                    for (i in 1..it.content.size-1){
+                        text += it.content[i].value + "/n"
+                    }
+                    binding.newsDetailTV.text = text
+                }
+
+            }
 
 
+        }
     }
 }

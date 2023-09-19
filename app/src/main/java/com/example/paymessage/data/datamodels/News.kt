@@ -2,6 +2,8 @@ package com.example.paymessage.data.datamodels
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.paymessage.data.database.Tagesschau
+import com.squareup.moshi.Json
 
 
 @Entity(tableName = "tagesschau")
@@ -14,20 +16,22 @@ data class News(
     val externalId: String,
     val title: String,
     val date: String,
+    val content: List<Content>,
+    val teaserImage: TeaserImage,
+
+
+
+
+
     var isLiked: Boolean = false,
 
 
 )
 
-data class teaserImage(
-    val alttext: String,
-    val imageVariants: List<ImageVariant>
 
-    )
 
 data class ImageVariant(
-    val url: String,
-    val width: Int,
-    val height: Int,
-    val format: String
+
+    @Json(name = "1x1-144") val image144: String
+
 )

@@ -13,7 +13,7 @@ import com.example.paymessage.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-   private val NewsViewModel: NewsViewModel by viewModels()
+    private val NewsViewModel: NewsViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
@@ -28,8 +28,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.newsListRV.setHasFixedSize(true)
-        NewsViewModel.newsDataList.observe(viewLifecycleOwner){
-            binding.newsListRV.adapter = NewsAdapter(NewsViewModel,it, NavController(requireContext()) )
+        NewsViewModel.newsDataList.observe(viewLifecycleOwner) {
+            binding.newsListRV.adapter =
+                NewsAdapter(NewsViewModel, it, NavController(requireContext()))
         }
 
 

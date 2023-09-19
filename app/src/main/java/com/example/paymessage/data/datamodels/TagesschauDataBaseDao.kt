@@ -1,18 +1,19 @@
 package com.example.paymessage.data.datamodels
 
+
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.paymessage.data.database.Tagesschau
 
 @Dao
 interface TagesschauDataBaseDao {
 
     @Insert
     fun insertall(news: News)
+
 
     @Update
     fun updateItem(news: News)

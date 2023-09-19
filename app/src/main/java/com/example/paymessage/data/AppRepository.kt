@@ -5,9 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.paymessage.api.TagesschauApi
-import com.example.paymessage.data.database.Tagesschau
 import com.example.paymessage.data.datamodels.News
-import com.example.paymessage.data.datamodels.NewsData
 import com.example.paymessage.data.datamodels.TagesschauDataBase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,6 +21,8 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     private val _newsdetail = MutableLiveData<News>()
     val newsdetail: MutableLiveData<News>
         get() = _newsdetail
+
+
 
 
     suspend fun getNews() {

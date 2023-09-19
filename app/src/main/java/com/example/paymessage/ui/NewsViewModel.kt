@@ -3,13 +3,11 @@ package com.example.paymessage.ui
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.viewModelScope
 import com.example.paymessage.api.TagesschauApi
 import com.example.paymessage.data.AppRepository
-import com.example.paymessage.data.database.Tagesschau
 import com.example.paymessage.data.datamodels.News
-import com.example.paymessage.data.datamodels.NewsData
 import com.example.paymessage.data.datamodels.TagesschauDataBase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,7 +47,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun loadFactsDetail(id: Long) {
+    fun loadNewsDetail(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val detail = repository.getNewsDetail(id)
 
@@ -68,6 +66,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
             repository.getliked()
         }
     }
+
+
 }
 
 

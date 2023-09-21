@@ -32,6 +32,6 @@ data class News(
 
 data class ImageVariant(
 
-    @Json(name = "1x1-144") val image144: String
+    @Json(name = "16x9-960") val image144: String
 
 )

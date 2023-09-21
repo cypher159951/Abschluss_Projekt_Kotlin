@@ -23,9 +23,11 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         get() = _newsdetail
 
 
+   private var newsLoaded = false
 
 
     suspend fun getNews() {
+        //if (!newsLoaded)
         try {
             val news = api.retrofitService.getNews().news
             _news.postValue(news)
@@ -33,19 +35,23 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
                 insertNewsFromApi(oneNews)
             }
             Log.d(TAG, "getNews Data: $news")
+            newsLoaded = true
         } catch (e: Exception) {
             Log.e(TAG, "Error loading Data from API: $e")
         }
     }
+
+
+
     fun insertNewsFromApi(itemData: News) {
         try {
+           // if (dataLoadet){
             GlobalScope.launch {
                 Log.d(ContentValues.TAG, "getItems Data: $itemData")
                 newsDatabase.dao.insertall(itemData)
-
             }
         } catch (e: java.lang.Exception) {
-            Log.d(ContentValues.TAG, "Error inserting facts from API into database: $e")
+            Log.d(ContentValues.TAG, "Error inserting news from API into database: $e")
         }
     }
     fun getAll(): LiveData<List<News>> {

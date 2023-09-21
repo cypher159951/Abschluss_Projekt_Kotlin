@@ -3,18 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.paymessage.ui.HomeFragment" >
+    android:background="#A2CCEC"
+    tools:context="com.example.paymessage.ui.HomeFragment">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarHomeTB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#A2CCEC"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newsListRV"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="70dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarHomeTB"
         tools:listitem="@layout/news_item" />
+
+    <ImageButton
+        android:id="@+id/navBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="#03000000"
+        android:src="@drawable/baseline_more_vert_24"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarHomeTB"
+        app:layout_constraintStart_toStartOf="@+id/toolbarHomeTB"
+        app:layout_constraintTop_toTopOf="@+id/toolbarHomeTB" />
+
+    <TextView
+        android:id="@+id/titleHomeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:text="NewsLetter"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/navBTN"
+        app:layout_constraintStart_toEndOf="@+id/navBTN"
+        app:layout_constraintTop_toTopOf="@+id/navBTN"
+        app:layout_constraintVertical_bias="0.454" />
 </androidx.constraintlayout.widget.ConstraintLayout>

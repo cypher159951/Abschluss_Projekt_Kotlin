@@ -34,13 +34,13 @@ class NewsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataset[position]
         holder.binding.newsTV.setText(item.title)
-        holder.binding.contactAvatarIV.load(item.teaserImage.imageVariants.image144)
+        holder.binding.newsAvatarIV.load(item.teaserImage.imageVariants.image144)
 
-
-        holder.binding.contactCV.setOnClickListener {
+        holder.binding.newsCV.setOnClickListener {
             //Mit der id zum DetailFragment navigieren
             holder.itemView.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment (dataset[position].id!!))
+                .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment (dataset[position].id!!, ))
+
         }
 
     }

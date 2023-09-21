@@ -34,6 +34,8 @@ class Converter {
         return gson.toJson(list)
     }
 
+
+
     //Converter für den Content
     @TypeConverter
     fun fromStringToContent(value: String?): List<Content?>? {

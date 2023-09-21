@@ -6,19 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.paymessage.api.TagesschauApi
-import com.example.paymessage.data.AppRepository
-import com.example.paymessage.data.database.Tagesschau
-import com.example.paymessage.data.datamodels.TagesschauDataBase
-import com.example.paymessage.databinding.FragmentDetailBinding
+import coil.load
+import com.example.paymessage.databinding.FragmentArtikelBinding
 
 
 
-class DetailFragment : Fragment() {
+
+class ArtikelFragment : Fragment() {
 
     private val viewModel: NewsViewModel by viewModels()
 
-    private lateinit var binding: FragmentDetailBinding
+    private lateinit var binding: FragmentArtikelBinding
 
 
 
@@ -26,7 +24,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        binding = FragmentArtikelBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,11 +42,10 @@ class DetailFragment : Fragment() {
                         text += it.content[i].value + "/n"
                     }
                     binding.newsDetailTV.text = text
+                    binding.artikelImageIV.load(it.teaserImage.imageVariants.image144)
                 }
 
             }
-
-
         }
     }
 }

@@ -48,12 +48,17 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleAtikelTV"
+                android:id="@+id/titleArtikelTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Überschrift Artikel"
                 android:textSize="21sp"
                 android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/platzhalterTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/artikelTV"
@@ -73,7 +78,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

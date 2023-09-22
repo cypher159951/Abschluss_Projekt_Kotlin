@@ -11,8 +11,6 @@ import coil.load
 import com.example.paymessage.databinding.FragmentArtikelBinding
 
 
-
-
 class ArtikelFragment : Fragment() {
 
     private val viewModel: NewsViewModel by viewModels()
@@ -37,7 +35,7 @@ class ArtikelFragment : Fragment() {
             viewModel.loadNewsDetail(id)
             viewModel.newsDetail.observe(viewLifecycleOwner) {
                 if (it.content.isNotEmpty()){
-                    binding.titleAtikelTV.text = it.content[0].value
+                    binding.titleArtikelTV.text = it.content[0].value
                     var text: String =""
                     for (i in 1..it.content.size-1){
                         text += it.content[i].value
@@ -52,8 +50,9 @@ class ArtikelFragment : Fragment() {
 
         binding.backBTNIV.setOnClickListener{
             val navController = findNavController()
-            navController.navigate(ArtikelFragmentDirections.actionDetailFragmentToHomeFragment())
+            navController.navigate(ArtikelFragmentDirections.actionArtikelFragmentToHomeFragment())
         }
+
     }
 
 

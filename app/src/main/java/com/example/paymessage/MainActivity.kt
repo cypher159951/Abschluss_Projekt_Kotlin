@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     //  val navController = findNavController(R.id.fragmentContainerView)
 
                     val currentDestination = navController.currentDestination
-                    if (currentDestination?.id == R.id.detailFragment) {
+                    if (currentDestination?.id == R.id.artikelFragment) {
                         val action = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
                         navController.navigate(action)
                     } else if (currentDestination?.id == R.id.homeFragment) {
@@ -43,13 +43,26 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
+                R.id.settings -> {
+                    val currentDestination = navController.currentDestination
+                    if (currentDestination?.id == R.id.artikelFragment) {
+                        // Wenn das aktuelle Ziel das Detailfragment ist, navigiere zu den Einstellungen
+                        val action = ArtikelFragmentDirections.actionArtikelFragmentToSettingsFragment()
+                        navController.navigate(action)
+                    } else {
+                        // Wenn das aktuelle Ziel nicht das Detailfragment ist, navigiere zum Homefragment
+                        val action = ArtikelFragmentDirections.actionArtikelFragmentToSettingsFragment()
+                        navController.navigate(action)
+                    }
+                    true
+                }
+
                 R.id.home -> {
                     val navController = findNavController(R.id.fragmentContainerView)
                     val currentDestination = navController.currentDestination
 
-                    if (currentDestination?.id == R.id.detailFragment) {
-                        val action = ArtikelFragmentDirections.actionDetailFragmentToHomeFragment()
-                        navController.navigate(action)
+                    if (currentDestination?.id == R.id.artikelFragment) {
+                        val action = ArtikelFragmentDirections.actionArtikelFragmentToHomeFragment()
                     } else if (currentDestination?.id == R.id.settingsFragment) {
                         val action =
                             SettingsFragmentDirections.actionSettingsFragmentToHomeFragment()
@@ -57,6 +70,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
+
+
 
                 else -> {// Standard-Navigation zu anderen Fragmenten
                     NavigationUI.onNavDestinationSelected(item, navController!!)

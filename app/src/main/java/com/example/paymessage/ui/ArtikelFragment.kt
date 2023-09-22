@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.paymessage.databinding.FragmentArtikelBinding
 
@@ -36,16 +37,24 @@ class ArtikelFragment : Fragment() {
             viewModel.loadNewsDetail(id)
             viewModel.newsDetail.observe(viewLifecycleOwner) {
                 if (it.content.isNotEmpty()){
-                    binding.newsDetailTV.text = it.content[0].value
+                    binding.titleAtikelTV.text = it.content[0].value
                     var text: String =""
                     for (i in 1..it.content.size-1){
-                        text += it.content[i].value + "/n"
+                        text += it.content[i].value
                     }
-                    binding.newsDetailTV.text = text
+
+                    binding.artikelTV.text = text
                     binding.artikelImageIV.load(it.teaserImage.imageVariants.image144)
                 }
 
             }
         }
+
+        binding.backBTNIV.setOnClickListener{
+            val navController = findNavController()
+            navController.navigate(ArtikelFragmentDirections.actionDetailFragmentToHomeFragment())
+        }
     }
+
+
 }

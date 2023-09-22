@@ -3,11 +3,14 @@
 
 
 
-    <item android:title=""
+    <item
         android:id="@+id/home"
+        android:title=""
         android:icon="@drawable/baseline_home_24"/>
-    <item android:title=""
+
+    <item
         android:id="@+id/settings"
+        android:title=""
         android:icon="@drawable/baseline_settings_24"/>
 
 

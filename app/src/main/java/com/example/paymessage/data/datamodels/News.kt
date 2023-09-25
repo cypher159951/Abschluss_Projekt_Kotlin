@@ -20,8 +20,6 @@ data class News(
 
 
 
-
-
     var isLiked: Boolean = false,
 
 

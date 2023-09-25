@@ -31,6 +31,9 @@ class FavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.favoritenRV.setHasFixedSize(true)
 
+        NewsViewModel.favoriteDataList.observe(viewLifecycleOwner) {
+            binding.favoritenRV.adapter = FavoriteAdapter(NewsViewModel, it, NavController(requireContext()))
 
         }
     }
+}

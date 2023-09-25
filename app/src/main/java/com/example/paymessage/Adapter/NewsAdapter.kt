@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.paymessage.R
 import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.databinding.NewsItemBinding
 import com.example.paymessage.ui.HomeFragmentDirections
@@ -39,8 +40,20 @@ class NewsAdapter(
         holder.binding.newsCV.setOnClickListener {
             //Mit der id zum DetailFragment navigieren
             holder.itemView.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment (dataset[position].id!!, ))
+                .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment (dataset[position].sophoraId!!, ))
+        }
 
+        val likeArtikel = if (item.isLiked) R.drawable.baseline_star_24
+        else R.drawable.baseline_star_outline_24
+        holder.binding.likeBTN.setImageResource(likeArtikel)
+
+        holder.binding.likeBTN.setOnClickListener {
+            val like = dataset[position]
+            like.isLiked = !like.isLiked
+            notifyItemChanged(position)
+
+            //Datenbank updaten
+            viewModel.updateLikestatusInDb(like)
         }
 
     }

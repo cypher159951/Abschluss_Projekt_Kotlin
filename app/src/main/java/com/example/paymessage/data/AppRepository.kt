@@ -58,7 +58,7 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         return newsDatabase.dao.getAllItems()
     }
 
-    fun getNewsDetail(id:Long):News{
+    fun getNewsDetail(id:String):News{
         return newsDatabase.dao.getItemById(id)
     }
 

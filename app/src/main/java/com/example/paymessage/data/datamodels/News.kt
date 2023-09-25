@@ -10,8 +10,7 @@ import com.squareup.moshi.Json
 
 data class News(
 
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    @PrimaryKey
     val sophoraId: String,
     val externalId: String,
     val title: String,

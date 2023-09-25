@@ -47,7 +47,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun loadNewsDetail(id: Long) {
+    fun loadNewsDetail(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val detail = repository.getNewsDetail(id)
 

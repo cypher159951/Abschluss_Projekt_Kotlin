@@ -31,8 +31,10 @@ class ArtikelFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            val id = it.getLong("id")
-            viewModel.loadNewsDetail(id)
+            val id = it.getString("id")
+            if (id != null) {
+                viewModel.loadNewsDetail(id)
+            }
             viewModel.newsDetail.observe(viewLifecycleOwner) {
                 if (it.content.isNotEmpty()){
                     binding.titleArtikelTV.text = it.content[0].value

@@ -32,7 +32,5 @@ class HomeFragment : Fragment() {
             binding.newsListRV.adapter =
                 NewsAdapter(NewsViewModel, it, NavController(requireContext()))
         }
-
-
     }
 }

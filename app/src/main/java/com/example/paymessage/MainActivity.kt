@@ -34,15 +34,15 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.favorite -> {
+//                        val action =
+//                            HomeFragmentDirections.actionHomeFragmentToFavoriteFragment()
+//                        navController.navigate(action)
                         val currentDestination = navController.currentDestination
-                        if (currentDestination?.id == R.id.artikelFragment) {
-                            val action =
-                                HomeFragmentDirections.actionHomeFragmentToFavoriteFragment()
-                            navController.navigate(action)
-                        } else if (currentDestination?.id == R.id.homeFragment) {
-                            val action =
-                                HomeFragmentDirections.actionHomeFragmentToFavoriteFragment()
-                            navController.navigate(action)
+                        if (currentDestination?.id != R.id.favoriteFragment) {
+                            //Navigate to Favorite
+                            navController.navigate(
+                                R.id.favoriteFragment
+                            )
                         }
                         true
                     }
@@ -51,15 +51,11 @@ class MainActivity : AppCompatActivity() {
                     R.id.settings -> {
 
                         val currentDestination = navController.currentDestination
-
-                        if (currentDestination?.id == R.id.artikelFragment) {
-                            val action =
-                                HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
-                            navController.navigate(action)
-                        } else if (currentDestination?.id == R.id.homeFragment) {
-                            val action =
-                                HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
-                            navController.navigate(action)
+                        if (currentDestination?.id != R.id.settingsFragment) {
+                            //Navigate to Favorite
+                            navController.navigate(
+                                R.id.settingsFragment
+                            )
                         }
                         true
                     }
@@ -67,14 +63,11 @@ class MainActivity : AppCompatActivity() {
 
                     R.id.home -> {
                         val currentDestination = navController.currentDestination
-                        if (currentDestination?.id == R.id.artikelFragment) {
-                            val action =
-                                ArtikelFragmentDirections.actionArtikelFragmentToHomeFragment()
-                            navController.navigate(action)
-                        } else if (currentDestination?.id == R.id.settingsFragment) {
-                            val action =
-                                SettingsFragmentDirections.actionSettingsFragmentToHomeFragment()
-                            navController.navigate(action)
+                        if (currentDestination?.id != R.id.homeFragment) {
+                            //Navigate to Favorite
+                            navController.navigate(
+                                R.id.homeFragment
+                            )
                         }
                         true
                     }
@@ -86,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                 }
+
             }
         } catch (
             e: Exception

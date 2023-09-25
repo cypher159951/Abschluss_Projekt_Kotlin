@@ -2,6 +2,7 @@ package com.example.paymessage.Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.paymessage.R
@@ -9,10 +10,11 @@ import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.databinding.FavoriteItemBinding
 import com.example.paymessage.ui.NewsViewModel
 
-class FavoriteAdapter (
+class FavoriteAdapter(
 
     private val viewModel: NewsViewModel,
-    private var dataset: List<News>
+    private var dataset: List<News>,
+    navController: NavController
 ): RecyclerView.Adapter<FavoriteAdapter.ViewHolder>(){
 
     inner class ViewHolder(val binding: FavoriteItemBinding) :
@@ -41,6 +43,9 @@ class FavoriteAdapter (
             //Datenbank updaten
             viewModel.updateLikestatusInDb(like)
         }
+
+
+
     }
 
 

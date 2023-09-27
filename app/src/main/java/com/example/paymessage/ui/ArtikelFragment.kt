@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.paymessage.R
+import com.example.paymessage.data.datamodels.News
+import com.example.paymessage.databinding.FavoriteItemBinding
 import com.example.paymessage.databinding.FragmentArtikelBinding
 
 
@@ -16,6 +20,7 @@ class ArtikelFragment : Fragment() {
     private val viewModel: NewsViewModel by viewModels()
 
     private lateinit var binding: FragmentArtikelBinding
+
 
 
 
@@ -54,8 +59,9 @@ class ArtikelFragment : Fragment() {
             val navController = findNavController()
             navController.navigate(ArtikelFragmentDirections.actionArtikelFragmentToHomeFragment())
         }
-
     }
+
+
 
 
 }

@@ -54,6 +54,8 @@ class NewsAdapter(
 
             //Datenbank updaten
             viewModel.updateLikestatusInDb(like)
+
+       //     holder.binding.likeBTN.setImageResource(if (like.isLiked) R.drawable.baseline_star_24 else R.drawable.baseline_star_outline_24)
         }
 
     }

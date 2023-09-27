@@ -11,6 +11,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 const val TAG = "RepositoryTAG"
+
 class AppRepository(val api: TagesschauApi, private val newsDatabase: TagesschauDataBase) {
 
     private val _news = MutableLiveData<List<News>>()
@@ -23,29 +24,22 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         get() = _newsdetail
 
 
-   private var newsLoaded = false
-
-
     suspend fun getNews() {
-        //if (!newsLoaded)
         try {
             val news = api.retrofitService.getNews().news
             _news.postValue(news)
-            for (oneNews in news){
+            for (oneNews in news) {
                 insertNewsFromApi(oneNews)
             }
             Log.d(TAG, "getNews Data: $news")
-            newsLoaded = true
         } catch (e: Exception) {
             Log.e(TAG, "Error loading Data from API: $e")
         }
     }
 
 
-
     fun insertNewsFromApi(itemData: News) {
         try {
-           // if (dataLoadet){
             GlobalScope.launch {
                 Log.d(ContentValues.TAG, "getItems Data: $itemData")
                 newsDatabase.dao.insertall(itemData)
@@ -54,20 +48,21 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
             Log.d(ContentValues.TAG, "Error inserting news from API into database: $e")
         }
     }
+
     fun getAll(): LiveData<List<News>> {
         return newsDatabase.dao.getAllItems()
     }
 
-    fun getNewsDetail(id:String):News{
+    fun getNewsDetail(id: String): News {
         return newsDatabase.dao.getItemById(id)
     }
 
-    fun updateLikeStatus(isLike: News){
+    fun updateLikeStatus(isLike: News) {
         try {
             GlobalScope.launch {
                 newsDatabase.dao.updateItem(isLike)
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e(ContentValues.TAG, "Error updating like Status in data")
         }
     }

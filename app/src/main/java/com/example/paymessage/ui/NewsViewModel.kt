@@ -1,5 +1,6 @@
 package com.example.paymessage.ui
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -35,9 +36,15 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         repository.getAll()
     }
 
+    var loaddata = false
+
+
+    @SuppressLint("SuspiciousIndentation")
     fun loadData() {
+        if (loaddata)
         viewModelScope.launch {
             repository.getNews()
+            loaddata = true
         }
     }
 
@@ -47,11 +54,14 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+
+
     fun loadNewsDetail(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val detail = repository.getNewsDetail(id)
 
             newsDetail.postValue(detail)
+
         }
     }
 

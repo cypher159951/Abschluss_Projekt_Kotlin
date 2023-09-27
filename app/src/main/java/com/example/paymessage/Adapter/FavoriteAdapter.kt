@@ -43,9 +43,6 @@ class FavoriteAdapter(
             //Datenbank updaten
             viewModel.updateLikestatusInDb(like)
         }
-
-
-
     }
 
 

@@ -27,16 +27,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
         try {
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.favorite -> {
-//                        val action =
-//                            HomeFragmentDirections.actionHomeFragmentToFavoriteFragment()
-//                        navController.navigate(action)
+
                         val currentDestination = navController.currentDestination
                         if (currentDestination?.id != R.id.favoriteFragment) {
                             //Navigate to Favorite

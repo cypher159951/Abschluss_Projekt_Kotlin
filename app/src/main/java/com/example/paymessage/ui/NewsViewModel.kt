@@ -38,25 +38,24 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         loadData()
     }
 
-   // var loaddata = false
-
 
     @SuppressLint("SuspiciousIndentation")
     fun loadData() {
-     //   if (loaddata)
         viewModelScope.launch(Dispatchers.IO) {
             repository.getNews()
-     //         loaddata = true
+
         }
     }
 
+
+    //für HomeNews position speichern
     var listStateParcel: Parcelable? = null
 
     fun saveListState(parcel: Parcelable) {
         listStateParcel = parcel
     }
 
-//für favoriten
+    //für favoriten position speichern
     var listStateFavorite: Parcelable? = null
 
     fun saveListStateFavorite(parcel: Parcelable) {

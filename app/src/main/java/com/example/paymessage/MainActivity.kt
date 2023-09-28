@@ -64,6 +64,9 @@ class MainActivity : AppCompatActivity() {
                                 R.id.favoriteFragment
                             )
                         }*/
+
+                        //einmal oben eine Funktion für, da immerwieder 3x angewendet wird, das man nicht immmer alle neu
+                        //schreiben muss
                         switchFragment(FavoriteFragment())
                         true
                     }

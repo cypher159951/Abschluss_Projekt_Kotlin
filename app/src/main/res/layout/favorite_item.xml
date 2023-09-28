@@ -7,6 +7,7 @@
     android:background="#282B2E">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/favoriteArtikel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="22dp"

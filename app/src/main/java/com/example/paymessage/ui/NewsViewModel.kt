@@ -56,6 +56,14 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         listStateParcel = parcel
     }
 
+//für favoriten
+    var listStateFavorite: Parcelable? = null
+
+    fun saveListStateFavorite(parcel: Parcelable) {
+        listStateFavorite = parcel
+    }
+
+
     fun insertDataFromApi(itemData: News) {
         viewModelScope.launch {
             repository.insertNewsFromApi(itemData)

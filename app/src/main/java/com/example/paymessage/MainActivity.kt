@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     private val fragmentManager: FragmentManager = supportFragmentManager
     private lateinit var currentFragment: Fragment
 
+
+    //zwischen den Fragmenten wechseln
     private fun switchFragment(fragment: Fragment) {
         fragmentManager.commit {
             replace(R.id.fragmentContainerView, fragment)
@@ -38,24 +40,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val onItemSelectedListener =
-        NavigationBarView.OnItemSelectedListener  { item ->
-            when (item.itemId) {
-                R.id.favorite -> {
-                    switchFragment(FavoriteFragment())
-                    return@OnItemSelectedListener true
-                }
-                R.id.settings -> {
-                    switchFragment(SettingsFragment())
-                    return@OnItemSelectedListener true
-                }
-                R.id.home -> {
-                    switchFragment(HomeFragment())
-                    return@OnItemSelectedListener true
-                }
-            }
-            false
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -33,8 +33,12 @@ class FavoriteFragment : Fragment() {
         binding.favoritenRV.setHasFixedSize(true)
 
         NewsViewModel.favoriteDataList.observe(viewLifecycleOwner) {
-            binding.favoritenRV.adapter = FavoriteAdapter(NewsViewModel, it, NavController(requireContext()))
-
+            binding.favoritenRV.adapter = FavoriteAdapter(NewsViewModel, it, binding.favoritenRV.layoutManager ,NavController(requireContext()))
+            NewsViewModel.listStateFavorite?.let {parcelable ->
+                binding.favoritenRV.layoutManager?.onRestoreInstanceState(parcelable)
+                NewsViewModel.listStateFavorite = null
+            }
         }
+
     }
 }

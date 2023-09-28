@@ -35,13 +35,16 @@ class HomeFragment : Fragment() {
         binding.newsListRV.setHasFixedSize(true)
         newsViewModel.newsDataList.observe(viewLifecycleOwner) {
             binding.newsListRV.adapter =
-                NewsAdapter(newsViewModel, it, NavController(requireContext()))
+                NewsAdapter(newsViewModel, it, NavController(requireContext()), binding.newsListRV.layoutManager)
             newsViewModel.listStateParcel?.let {parcelable ->
                 binding.newsListRV.layoutManager?.onRestoreInstanceState(parcelable)
                 newsViewModel.listStateParcel = null
             }
         }
     }
+
+
+    //position von RV speichern
     override fun onDestroyView() {
         val listState = binding.newsListRV.layoutManager?.onSaveInstanceState()
         listState?.let { newsViewModel.saveListState(it) }

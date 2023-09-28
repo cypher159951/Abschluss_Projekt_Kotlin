@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.paymessage.R
@@ -16,6 +17,7 @@ class NewsAdapter(
     private val viewModel: NewsViewModel,
     private var dataset: List<News>,
     private val navController: NavController,
+    private val layoutManager: RecyclerView.LayoutManager?
 
     ) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
@@ -58,6 +60,8 @@ class NewsAdapter(
             like.isLiked = !like.isLiked
           //  notifyItemChanged(position)
 
+            val listState = layoutManager?.onSaveInstanceState()
+            listState?.let {viewModel.saveListState(it) }
             //Datenbank updaten
             viewModel.updateLikestatusInDb(like)
 

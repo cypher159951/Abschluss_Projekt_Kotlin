@@ -22,7 +22,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
 
 
-    val newsDataList: LiveData<List<News>> = repository.getAll()
+    var newsDataList: LiveData<List<News>>
 
     val favoriteDataList: LiveData<List<News>> = repository.getliked()
 
@@ -33,18 +33,18 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         loadData()
-        repository.getAll()
+         newsDataList = repository.getAll()
     }
 
-    var loaddata = false
+   // var loaddata = false
 
 
     @SuppressLint("SuspiciousIndentation")
     fun loadData() {
-        if (loaddata)
-        viewModelScope.launch {
+     //   if (loaddata)
+        viewModelScope.launch(Dispatchers.IO) {
             repository.getNews()
-            loaddata = true
+     //         loaddata = true
         }
     }
 

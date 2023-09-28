@@ -38,7 +38,7 @@ class FavoriteAdapter(
         holder.binding.favoriteStarBTN.setOnClickListener {
             val like = dataset[position]
             like.isLiked = !like.isLiked
-            notifyItemChanged(position)
+          //  notifyItemChanged(position)
 
             //Datenbank updaten
             viewModel.updateLikestatusInDb(like)

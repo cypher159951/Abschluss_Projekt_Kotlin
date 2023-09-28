@@ -15,6 +15,8 @@ interface TagesschauDataBaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertall(news: News)
 
+    @Query("SELECT COUNT(*) FROM tagesschau ")
+    fun checkDataCount(): Int
 
     @Update
     fun updateItem(news: News)

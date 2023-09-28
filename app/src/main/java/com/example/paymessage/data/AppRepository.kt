@@ -26,11 +26,14 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
 
     suspend fun getNews() {
         try {
-            val news = api.retrofitService.getNews().news
-            _news.postValue(news)
-            for (oneNews in news) {
-                insertNewsFromApi(oneNews)
+            if (checkData() == 0) {
+                val news = api.retrofitService.getNews().news
+                _news.postValue(news)
+                for (oneNews in news) {
+                    insertNewsFromApi(oneNews)
+                }
             }
+
             Log.d(TAG, "getNews Data: $news")
         } catch (e: Exception) {
             Log.e(TAG, "Error loading Data from API: $e")
@@ -52,6 +55,11 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     fun getAll(): LiveData<List<News>> {
         return newsDatabase.dao.getAllItems()
     }
+
+    fun checkData(): Int {
+        return newsDatabase.dao.checkDataCount()
+    }
+
 
     fun getNewsDetail(id: String): News {
         return newsDatabase.dao.getItemById(id)

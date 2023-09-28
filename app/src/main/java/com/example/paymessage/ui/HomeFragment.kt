@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,7 @@ import com.example.paymessage.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private val NewsViewModel: NewsViewModel by viewModels()
+    private val newsViewModel: NewsViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
    
 
@@ -32,9 +33,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.newsListRV.setHasFixedSize(true)
-        NewsViewModel.newsDataList.observe(viewLifecycleOwner) {
+        newsViewModel.newsDataList.observe(viewLifecycleOwner) {
             binding.newsListRV.adapter =
-                NewsAdapter(NewsViewModel, it, NavController(requireContext()))
+                NewsAdapter(newsViewModel, it, NavController(requireContext()))
         }
     }
 

@@ -23,6 +23,13 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     val newsdetail: MutableLiveData<News>
         get() = _newsdetail
 
+    var newsDataList: LiveData<List<News>>
+
+    init {
+        newsDataList = newsDatabase.dao.getAllItems()
+    }
+
+
 
     suspend fun getNews() {
         try {

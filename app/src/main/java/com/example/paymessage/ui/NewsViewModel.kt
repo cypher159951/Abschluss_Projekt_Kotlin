@@ -2,8 +2,10 @@ package com.example.paymessage.ui
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Parcelable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.viewModelScope
 import com.example.paymessage.api.TagesschauApi
@@ -22,7 +24,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
 
 
-    var newsDataList: LiveData<List<News>>
+    var newsDataList: LiveData<List<News>> = repository.newsDataList
+
 
     val favoriteDataList: LiveData<List<News>> = repository.getliked()
 
@@ -33,7 +36,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         loadData()
-         newsDataList = repository.getAll()
     }
 
    // var loaddata = false
@@ -46,6 +48,12 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
             repository.getNews()
      //         loaddata = true
         }
+    }
+
+    var listStateParcel: Parcelable? = null
+
+    fun saveListState(parcel: Parcelable) {
+        listStateParcel = parcel
     }
 
     fun insertDataFromApi(itemData: News) {

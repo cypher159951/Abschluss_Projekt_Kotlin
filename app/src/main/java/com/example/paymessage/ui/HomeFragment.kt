@@ -36,7 +36,16 @@ class HomeFragment : Fragment() {
         newsViewModel.newsDataList.observe(viewLifecycleOwner) {
             binding.newsListRV.adapter =
                 NewsAdapter(newsViewModel, it, NavController(requireContext()))
+            newsViewModel.listStateParcel?.let {parcelable ->
+                binding.newsListRV.layoutManager?.onRestoreInstanceState(parcelable)
+                newsViewModel.listStateParcel = null
+            }
         }
+    }
+    override fun onDestroyView() {
+        val listState = binding.newsListRV.layoutManager?.onSaveInstanceState()
+        listState?.let { newsViewModel.saveListState(it) }
+        super.onDestroyView()
     }
 
 }

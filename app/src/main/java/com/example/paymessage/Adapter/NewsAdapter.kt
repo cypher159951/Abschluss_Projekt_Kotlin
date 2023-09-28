@@ -27,6 +27,12 @@ class NewsAdapter(
         return ViewHolder(binding)
     }
 
+
+    fun setData(newData: List<News>) {
+        this.dataset = newData
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return dataset.size
     }
@@ -40,7 +46,7 @@ class NewsAdapter(
         holder.binding.newsCV.setOnClickListener {
             //Mit der id zum DetailFragment navigieren
             holder.itemView.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment (dataset[position].sophoraId!!, ))
+                .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(dataset[position].sophoraId!!))
         }
 
         val likeArtikel = if (item.isLiked) R.drawable.baseline_star_24

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#282B2E"
+    android:tag = "HF"
     tools:context="com.example.paymessage.ui.HomeFragment">
 
 

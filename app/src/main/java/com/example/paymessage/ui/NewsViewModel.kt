@@ -55,6 +55,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         listStateParcel = parcel
     }
 
+
+
     //für favoriten position speichern
     var listStateFavorite: Parcelable? = null
 

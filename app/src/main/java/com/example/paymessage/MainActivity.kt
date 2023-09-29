@@ -31,14 +31,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var currentFragment: Fragment
 
 
+    //Funktioniert nicht 100%ig, app crasht bei bestimmten fragmente wechseln
+
     //zwischen den Fragmenten wechseln
-    private fun switchFragment(fragment: Fragment) {
-        fragmentManager.commit {
-            replace(R.id.fragmentContainerView, fragment)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
-    }
+//    private fun switchFragment(fragment: Fragment) {
+//        fragmentManager.commit {
+//            replace(R.id.fragmentContainerView, fragment)
+//            setReorderingAllowed(true)
+//            addToBackStack(null)
+//        }
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,67 +52,66 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
         try {
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.favorite -> {
 
-                        /*val currentDestination = navController.currentDestination
+                        val currentDestination = navController.currentDestination
                         if (currentDestination?.id != R.id.favoriteFragment) {
                             //Navigate to Favorite
                             navController.navigate(
                                 R.id.favoriteFragment
                             )
-                        }*/
+                        }
 
                         //einmal oben eine Funktion für, da immerwieder 3x angewendet wird, das man nicht immmer alle neu
                         //schreiben muss
-                        switchFragment(FavoriteFragment())
-                        true
+                        //  switchFragment(FavoriteFragment())
+                          true
                     }
 
 
                     R.id.settings -> {
-
-                        /*val currentDestination = navController.currentDestination
+                        val currentDestination = navController.currentDestination
                         if (currentDestination?.id != R.id.settingsFragment) {
                             //Navigate to Favorite
                             navController.navigate(
                                 R.id.settingsFragment
                             )
-                        }*/
-                        switchFragment(SettingsFragment())
-                        true
+                        }
+                        // switchFragment(SettingsFragment())
+                         true
                     }
 
 
                     R.id.home -> {
-                        /*val currentDestination = navController.currentDestination
+                        val currentDestination = navController.currentDestination
                         if (currentDestination?.id != R.id.homeFragment) {
                             //Navigate to Favorite
                             navController.navigate(
                                 R.id.homeFragment
                             )
-                        }*/
-                        switchFragment(HomeFragment())
+                        }
+                        //  switchFragment(HomeFragment())
                         true
                     }
 
-
-                    else -> {// Standard-Navigation zu anderen Fragmenten
+                    else -> {   // Standard-Navigation zu anderen Fragmenten
                         NavigationUI.onNavDestinationSelected(item, navController!!)
                         navController?.popBackStack(item.itemId, false)
                         true
                     }
                 }
-
             }
         } catch (
             e: Exception
         ) {
             Log.e("Settings", "${e}")
         }
+
     }
 }

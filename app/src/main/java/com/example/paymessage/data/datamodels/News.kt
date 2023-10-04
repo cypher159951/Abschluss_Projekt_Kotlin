@@ -15,7 +15,7 @@ data class News(
     val externalId: String,
     val title: String,
     val date: String,
-    val content: List<Content>,
+    val content: List<Content> = emptyList(),
     val teaserImage: TeaserImage,
 
 
@@ -23,7 +23,7 @@ data class News(
     var isLiked: Boolean = false,
 
 
-)
+    )
 
 
 

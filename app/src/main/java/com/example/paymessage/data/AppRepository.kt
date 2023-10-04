@@ -35,6 +35,7 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         try {
             if (checkData() == 0) {
                 val news = api.retrofitService.getNews().news
+            Log.d("APITest", "$news")
                 _news.postValue(news)
                 for (oneNews in news) {
                     insertNewsFromApi(oneNews)

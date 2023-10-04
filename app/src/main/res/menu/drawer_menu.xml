@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/nav_itemfacts"
+        android:title="Kunstfakten" />
+    <item
+        android:id="@+id/nav_itemchat"
+        android:title="Chat" />
+    <item
+        android:id="@+id/nav_itemsettings"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="Einstellungen" />
+    <item
+        android:id="@+id/nav_itemlogout"
+        android:title="Ausloggen" />
+
+
+</menu>

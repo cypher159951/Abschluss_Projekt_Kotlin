@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.paymessage.Adapter.NewsAdapter
+import com.example.paymessage.R
 import com.example.paymessage.databinding.FragmentHomeBinding
 
 
@@ -18,6 +20,7 @@ import com.example.paymessage.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
 
     private val newsViewModel: NewsViewModel by activityViewModels()
+    val viewModel: FireBaseViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
    
 
@@ -32,6 +35,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.user.observe(viewLifecycleOwner){
+            if(it == null)
+                findNavController().navigate(R.id.loginFragment)
+        }
+
         binding.newsListRV.setHasFixedSize(true)
         newsViewModel.newsDataList.observe(viewLifecycleOwner) {
             binding.newsListRV.adapter =

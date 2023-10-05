@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.paymessage.MainActivity
 import com.example.paymessage.R
 import com.example.paymessage.databinding.FragmentLoginBinding
 
@@ -22,6 +23,9 @@ class LoginFragment : Fragment() {
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
+
+        (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.GONE
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#282B2E">
+    android:background="@color/grey">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/favoriteArtikel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="22dp"
-        app:cardBackgroundColor="#282B2E"
+        app:cardBackgroundColor="@color/grey"
         app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

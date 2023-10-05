@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.paymessage.MainActivity
 import com.example.paymessage.databinding.FragmentSettingsBinding
 
 
 class SettingsFragment : Fragment() {
 
     private val viewModel: NewsViewModel by activityViewModels()
+    val viewmodel: FireBaseViewModel by activityViewModels()
     private lateinit var binding: FragmentSettingsBinding
 
 
@@ -27,6 +30,13 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.logoutBTN.setOnClickListener {
+            viewmodel.signOut()
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToLoginFragment())
+            (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.GONE
+
+        }
 
 
 

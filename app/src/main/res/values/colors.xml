@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="textColorPrimaryDay">#FC070609</color>
+    <color name="textColorPrimaryNight">#FCF9F9FA</color>
+
+
+
     <color name="black">#FF000000</color>
+    <color name="grey">#282B2E</color>
+    <color name="lila">#3D1F6C</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="leichtLila">#393743</color>
+    <color name="desert">#CFA58D</color>
+
+
 </resources>

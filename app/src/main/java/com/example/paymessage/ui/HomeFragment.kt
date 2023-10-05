@@ -6,16 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.paymessage.Adapter.NewsAdapter
+import com.example.paymessage.MainActivity
 import com.example.paymessage.R
 import com.example.paymessage.databinding.FragmentHomeBinding
+
 
 
 class HomeFragment : Fragment() {
@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
 
-
+   
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,52 +34,31 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
 
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.user.observe(viewLifecycleOwner) {
-            if (it == null)
+        (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.VISIBLE
+
+
+
+        viewModel.user.observe(viewLifecycleOwner){
+            if(it == null)
                 findNavController().navigate(R.id.loginFragment)
         }
 
         binding.newsListRV.setHasFixedSize(true)
         newsViewModel.newsDataList.observe(viewLifecycleOwner) {
             binding.newsListRV.adapter =
-                NewsAdapter(
-                    newsViewModel,
-                    it,
-                    NavController(requireContext()),
-                    binding.newsListRV.layoutManager
-                )
-            newsViewModel.listStateParcel?.let { parcelable ->
+                NewsAdapter(newsViewModel, it, NavController(requireContext()), binding.newsListRV.layoutManager)
+            newsViewModel.listStateParcel?.let {parcelable ->
                 binding.newsListRV.layoutManager?.onRestoreInstanceState(parcelable)
                 newsViewModel.listStateParcel = null
             }
         }
-
-
-
-        binding.drawerLayout
-
-        binding.navBTNIV.setOnClickListener {
-            openMenu()
-        }
     }
-
-
-    private fun openMenu() {
-        val drawerLayout = binding.drawerLayout
-        drawerLayout.openDrawer(GravityCompat.START)
-    }
-
-
-    private fun closeMenu() {
-        val drawerLayout = binding.drawerLayout
-        drawerLayout.closeDrawer(GravityCompat.START)
-    }
-
 
 
     //position von RV speichern

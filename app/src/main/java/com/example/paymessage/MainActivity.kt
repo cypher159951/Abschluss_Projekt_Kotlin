@@ -4,6 +4,7 @@ package com.example.paymessage
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -26,7 +27,7 @@ import java.lang.Exception
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private val fragmentManager: FragmentManager = supportFragmentManager
     private lateinit var currentFragment: Fragment
 
@@ -55,6 +56,9 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
+
+        binding.bottomNavigationView.visibility = View.GONE
+
         try {
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
@@ -114,4 +118,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 }

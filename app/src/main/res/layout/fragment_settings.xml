@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.SettingsFragment"
-    android:background="@color/grey">
+    android:background="#FF282B2E">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tollbarSettings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
+        android:background="#FF282B2E"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Einstellungen"
-        android:textColor="@color/white"
+        android:textColor="#FCF2F2F4"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tollbarSettings"
@@ -39,7 +39,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="64dp"
         android:text="Nachtmodus"
-        android:textColor="@color/white"
+        android:textColor="#FCF5F5F8"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,8 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
-        android:text="AUS"
-        android:textColor="@color/white"
+        android:textColor="#FCF0F0F4"
         app:layout_constraintBottom_toBottomOf="@+id/tagNachtModusTV"
         app:layout_constraintStart_toEndOf="@+id/tagNachtModusTV"
         app:layout_constraintTop_toTopOf="@+id/tagNachtModusTV" />
@@ -62,7 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="120dp"
         android:text="Logout"
-        android:backgroundTint="@color/lila"
+        android:textColor="#F6F5F5"
+        android:backgroundTint="#391D65"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

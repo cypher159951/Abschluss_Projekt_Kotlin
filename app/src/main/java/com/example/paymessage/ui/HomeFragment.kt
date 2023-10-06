@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -15,7 +16,7 @@ import com.example.paymessage.Adapter.NewsAdapter
 import com.example.paymessage.MainActivity
 import com.example.paymessage.R
 import com.example.paymessage.databinding.FragmentHomeBinding
-
+import com.example.paymessage.databinding.NewsItemBinding
 
 
 class HomeFragment : Fragment() {
@@ -23,6 +24,9 @@ class HomeFragment : Fragment() {
     private val newsViewModel: NewsViewModel by activityViewModels()
     val viewModel: FireBaseViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
+
+
+    private lateinit var shareButton: Button
 
 
    
@@ -33,7 +37,6 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-
 
     }
 

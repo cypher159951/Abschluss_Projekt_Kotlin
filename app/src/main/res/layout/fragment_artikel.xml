@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#282B2E"
-    app:cardBackgroundColor="@color/desert"
+    android:background="#FF282B2E"
+    app:cardBackgroundColor="#CDA48C"
     app:cardCornerRadius="10dp"
     app:contentPadding="8dp">
 
@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
+        android:background="#FF282B2E"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="Überschrift Artikel"
                 android:textSize="21sp"
-                android:textColor="@color/white"
+                android:textColor="#FCF7F7FA"
                 android:textStyle="bold"/>
 
             <TextView
@@ -64,7 +64,7 @@
             <TextView
                 android:id="@+id/artikelTV"
                 android:layout_width="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#FCF8F7F8"
                 android:layout_height="wrap_content"
                 android:text="Ganzer Artikel"
                 android:textSize="18sp" />

@@ -5,14 +5,14 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="#FF282B2E"
     tools:context=".ui.FavoriteFragment" >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/favoriteTB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
+        android:background="#FF282B2E"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Merkliste"
-        android:textColor="@color/white"
+        android:textColor="#FCFAF8F8"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/favoriteTB"
         app:layout_constraintEnd_toEndOf="@+id/favoriteTB"

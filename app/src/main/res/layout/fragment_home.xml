@@ -20,6 +20,8 @@
         app:navGraph="@navigation/nav_graph" />
 
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newsListRV"
         android:layout_width="match_parent"

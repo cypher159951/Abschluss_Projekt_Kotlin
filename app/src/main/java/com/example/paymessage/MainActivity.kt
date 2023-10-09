@@ -1,31 +1,20 @@
 package com.example.paymessage
 
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.paymessage.databinding.ActivityMainBinding
-import com.example.paymessage.ui.ArtikelFragmentDirections
-import com.example.paymessage.ui.FavoriteFragment
-import com.example.paymessage.ui.FavoriteFragmentDirections
-import com.example.paymessage.ui.HomeFragment
-import com.example.paymessage.ui.HomeFragmentDirections
-import com.example.paymessage.ui.SettingsFragment
-import com.example.paymessage.ui.SettingsFragmentDirections
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 import java.lang.Exception
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private val fragmentManager: FragmentManager = supportFragmentManager
     private lateinit var currentFragment: Fragment
+
 
 
     //Funktioniert nicht 100%ig, app crasht bei bestimmten fragmente wechseln
@@ -49,7 +39,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -77,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                         //einmal oben eine Funktion für, da immerwieder 3x angewendet wird, das man nicht immmer alle neu
                         //schreiben muss
                         //  switchFragment(FavoriteFragment())
-                          true
+                        true
                     }
 
 
@@ -90,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                         // switchFragment(SettingsFragment())
-                         true
+                        true
                     }
 
 
@@ -120,5 +109,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
 }

@@ -55,6 +55,10 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //Pull-to-Refresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+
     //Navigation Dependencies using nav_version Variable to ensure same versions
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"

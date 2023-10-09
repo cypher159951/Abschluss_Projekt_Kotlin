@@ -1,7 +1,10 @@
 package com.example.paymessage.Adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +22,7 @@ class NewsAdapter(
     private val navController: NavController,
     private val layoutManager: RecyclerView.LayoutManager?
 
-    ) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: NewsItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -58,15 +61,14 @@ class NewsAdapter(
         holder.binding.likeBTN.setOnClickListener {
             val like = dataset[position]
             like.isLiked = !like.isLiked
-          //  notifyItemChanged(position)
+            //  notifyItemChanged(position)
 
             val listState = layoutManager?.onSaveInstanceState()
-            listState?.let {viewModel.saveListState(it) }
+            listState?.let { viewModel.saveListState(it) }
             //Datenbank updaten
             viewModel.updateLikestatusInDb(like)
 
-       //     holder.binding.likeBTN.setImageResource(if (like.isLiked) R.drawable.baseline_star_24 else R.drawable.baseline_star_outline_24)
-        }
 
+        }
     }
 }

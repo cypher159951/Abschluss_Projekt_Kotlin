@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "221003326591",
+    "project_id": "paymessage-29a06",
+    "storage_bucket": "paymessage-29a06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221003326591:android:65b160edb9f5fa9ddb0b4a",
+        "android_client_info": {
+          "package_name": "com.example.paymessage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChp37bJIK_X73OP94jmtQaZXAB_Epes9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

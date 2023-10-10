@@ -1,13 +1,9 @@
 package com.example.paymessage.Adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.paymessage.R
@@ -22,14 +18,15 @@ class NewsAdapter(
     private val navController: NavController,
     private val layoutManager: RecyclerView.LayoutManager?
 
-) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    inner class ViewHolder(val binding: NewsItemBinding) :
+    inner class NewsViewHolder(val binding: NewsItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        val inflator = LayoutInflater.from(parent.context)
         val binding = NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return NewsViewHolder(binding)
     }
 
 
@@ -43,7 +40,8 @@ class NewsAdapter(
     }
 
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val item = dataset[position]
         holder.binding.newsTV.setText(item.title)
         holder.binding.newsAvatarIV.load(item.teaserImage.imageVariants.image144)
@@ -70,5 +68,7 @@ class NewsAdapter(
 
 
         }
+
     }
+
 }

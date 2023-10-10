@@ -3,16 +3,17 @@ package com.example.paymessage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.paymessage.databinding.ActivityMainBinding
+import com.example.paymessage.ui.NewsViewModel
 import java.lang.Exception
 
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private val fragmentManager: FragmentManager = supportFragmentManager
     private lateinit var currentFragment: Fragment
-
+    private lateinit var newsViewModel: NewsViewModel
 
 
     //Funktioniert nicht 100%ig, app crasht bei bestimmten fragmente wechseln
@@ -40,9 +41,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
@@ -106,6 +107,20 @@ class MainActivity : AppCompatActivity() {
             e: Exception
         ) {
             Log.e("Settings", "${e}")
+        }
+
+
+        //Pull-to-Refresh funktion aufrufen / Nachrichten aktualisieren
+        newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            Log.d("refreshtest", "refreshing")
+            val delayMillis: Long = 1000
+            Handler().postDelayed({
+                newsViewModel.refreshNews()
+                Log.d("refreshtest2", "refreshfinish")
+                binding.swipeRefreshLayout.isRefreshing = false
+            }, delayMillis)
         }
 
     }

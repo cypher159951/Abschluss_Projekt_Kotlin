@@ -34,6 +34,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     val newsDetail = repository.newsdetail
 
 
+
+
     init {
         loadData()
     }
@@ -94,6 +96,16 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun prepareShareText(newsItem: News): String {
+        return "${newsItem.title}\n\n${newsItem.content}"
+    }
+
+    //funktion für pull-to-refresh
+    fun refreshNews() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getNews()
+        }
+    }
 
 }
 

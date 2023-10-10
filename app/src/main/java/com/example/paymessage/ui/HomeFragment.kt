@@ -1,25 +1,17 @@
 package com.example.paymessage.ui
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.paymessage.Adapter.NewsAdapter
 import com.example.paymessage.MainActivity
 import com.example.paymessage.R
 import com.example.paymessage.databinding.FragmentHomeBinding
-import com.example.paymessage.databinding.NewsItemBinding
 
 
 class HomeFragment : Fragment() {
@@ -77,4 +69,10 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
     }
 
+
 }
+
+
+
+
+

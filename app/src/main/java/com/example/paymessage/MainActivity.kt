@@ -14,6 +14,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.paymessage.databinding.ActivityMainBinding
 import com.example.paymessage.ui.NewsViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.Exception
 
 
@@ -113,15 +117,22 @@ class MainActivity : AppCompatActivity() {
         //Pull-to-Refresh funktion aufrufen / Nachrichten aktualisieren
         newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
 
-        //Handler coroutine
         binding.swipeRefreshLayout.setOnRefreshListener {
             Log.d("refreshtest", "refreshing")
             val delayMillis: Long = 1000
-            Handler().postDelayed({
+            //Starte eine Coroutine
+            CoroutineScope(Dispatchers.Main).launch {
+            // Warte für delayMillis in Millisekunden
+                delay(delayMillis)
+
+                //Rufe die refreshNews-Methode auf
                 newsViewModel.refreshNews()
                 Log.d("refreshtest2", "refreshfinish")
+
+                // Setze swipeRefreshLayout.isRefreshing auf false
                 binding.swipeRefreshLayout.isRefreshing = false
-            }, delayMillis)
+            }
         }
     }
 }
+

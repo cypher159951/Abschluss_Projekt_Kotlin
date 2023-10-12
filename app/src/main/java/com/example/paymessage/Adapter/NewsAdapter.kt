@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.paymessage.R
@@ -18,15 +20,15 @@ class NewsAdapter(
     private val navController: NavController,
     private val layoutManager: RecyclerView.LayoutManager?
 
-) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+) : ListAdapter<News, NewsAdapter.ViewHolder>(NewsDiffCallBack) {
 
-    inner class NewsViewHolder(val binding: NewsItemBinding) :
+    inner class ViewHolder(val binding: NewsItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflator = LayoutInflater.from(parent.context)
         val binding = NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NewsViewHolder(binding)
+        return ViewHolder(binding)
     }
 
 
@@ -41,7 +43,7 @@ class NewsAdapter(
 
 
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataset[position]
         holder.binding.newsTV.setText(item.title)
         holder.binding.newsAvatarIV.load(item.teaserImage.imageVariants.image144)
@@ -64,11 +66,19 @@ class NewsAdapter(
             val listState = layoutManager?.onSaveInstanceState()
             listState?.let { viewModel.saveListState(it) }
             //Datenbank updaten
-            viewModel.updateLikestatusInDb(like)
+           viewModel.updateLikestatusInDb(like)
 
 
         }
 
     }
 
+}
+
+
+    //benötigt für Listadadapter
+object NewsDiffCallBack : DiffUtil.ItemCallback<News>(){
+    override fun areItemsTheSame(oldItem: News, newItem: News) = oldItem.externalId == newItem.externalId
+
+    override fun areContentsTheSame(oldItem: News, newItem: News) = oldItem == newItem
 }

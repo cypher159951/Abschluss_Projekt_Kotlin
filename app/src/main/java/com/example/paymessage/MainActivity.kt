@@ -113,6 +113,7 @@ class MainActivity : AppCompatActivity() {
         //Pull-to-Refresh funktion aufrufen / Nachrichten aktualisieren
         newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
 
+        //Handler coroutine
         binding.swipeRefreshLayout.setOnRefreshListener {
             Log.d("refreshtest", "refreshing")
             val delayMillis: Long = 1000
@@ -122,8 +123,5 @@ class MainActivity : AppCompatActivity() {
                 binding.swipeRefreshLayout.isRefreshing = false
             }, delayMillis)
         }
-
     }
-
-
 }

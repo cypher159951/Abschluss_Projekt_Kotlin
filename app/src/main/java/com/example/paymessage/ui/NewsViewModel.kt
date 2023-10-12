@@ -3,6 +3,7 @@ package com.example.paymessage.ui
 import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,21 +24,22 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AppRepository(TagesschauApi, tagesschauDatabase)
 
 
-
     var newsDataList: LiveData<List<News>> = repository.newsDataList
 
 
     val favoriteDataList: LiveData<List<News>> = repository.getliked()
 
-    val news = repository.news
+    // val news = repository.news
 
     val newsDetail = repository.newsdetail
 
-
+   // val sortedNews: MutableLiveData<List<News>?> = repository.getSortedNews()
 
 
     init {
         loadData()
+        //  sortedNews.observeForever {
+    //}
     }
 
 
@@ -103,7 +105,9 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     //funktion für pull-to-refresh
     fun refreshNews() {
         viewModelScope.launch(Dispatchers.IO) {
+
             repository.getNews()
+
         }
     }
 

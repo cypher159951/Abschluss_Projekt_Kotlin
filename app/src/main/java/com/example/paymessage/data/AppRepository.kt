@@ -7,8 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.paymessage.api.TagesschauApi
 import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.data.datamodels.TagesschauDataBase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 const val TAG = "RepositoryTAG"
 
@@ -30,19 +32,21 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     }
 
 
-
     suspend fun getNews() {
         try {
-            if (checkData() == 0) {
-                val news = api.retrofitService.getNews().news
-            Log.d("APITest", "$news")
-                _news.postValue(news)
-                for (oneNews in news) {
-                    insertNewsFromApi(oneNews)
-                }
+            //  if (checkData() == 0) {
+            val news = api.retrofitService.getNews().news
+//            val sortedNewsList = news.sortedBy {
+//                it.date
+//            }
+      //      Log.d("sorteslisttest", "$sortedNewsList")
+      //      //  _news.postValue(news)
+            for (oneNews in news) {
+                insertNewsFromApi(oneNews)
             }
+            //    }
 
-            Log.d(TAG, "getNews Data: $news")
+            Log.d(TAG, "getNews Data: ${news.sortedByDescending { it.date }.map { it.title }}")
         } catch (e: Exception) {
             Log.e(TAG, "Error loading Data from API: $e")
         }
@@ -52,6 +56,7 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     fun insertNewsFromApi(itemData: News) {
         try {
             GlobalScope.launch {
+               // var sortedNewsList = itemData.value?.sortedByDescending
                 Log.d(ContentValues.TAG, "getItems Data: $itemData")
                 newsDatabase.dao.insertall(itemData)
             }
@@ -86,4 +91,24 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     fun getliked(): LiveData<List<News>> {
         return newsDatabase.dao.getLiked()
     }
+
+
+    //Nachrichten nach Datum / Date sortieren
+//    fun getSortedNews(): MutableLiveData<List<News>?> {
+//        val sortedNewsLiveData = MutableLiveData<List<News>?>()
+//        GlobalScope.launch(Dispatchers.IO) {
+//            // Daten aus der Datenbank holen
+//            val allNews = newsDatabase.dao.getAllItems()
+//            // Nach Datum absteigend sortieren
+//            val sortedNews = allNews.value?.sortedByDescending { it.date }
+//            withContext(Dispatchers.Main) {
+//                sortedNewsLiveData.value = sortedNews
+//                Log.e("sortedNewsTest", "$allNews")
+//            }
+//        }
+//        return sortedNewsLiveData
+//    }
 }
+
+
+

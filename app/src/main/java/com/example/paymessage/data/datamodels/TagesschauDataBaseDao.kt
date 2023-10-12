@@ -31,8 +31,13 @@ interface TagesschauDataBaseDao {
     @Query("SELECT * FROM tagesschau WHERE isLiked = 1")
     fun getLiked(): LiveData<List<News>>
 
-    @Query("SELECT * FROM tagesschau")
+
+    //ASC für aufsteigend
+    @Query("SELECT * FROM tagesschau ORDER by date DESC")
     fun getAllItems(): LiveData<List<News>>
+
+
+
 
 
 }

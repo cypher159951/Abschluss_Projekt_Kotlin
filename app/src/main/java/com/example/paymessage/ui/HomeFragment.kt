@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,10 @@ import com.example.paymessage.Adapter.NewsAdapter
 import com.example.paymessage.MainActivity
 import com.example.paymessage.R
 import com.example.paymessage.databinding.FragmentHomeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -72,6 +77,26 @@ class HomeFragment : Fragment() {
             newsViewModel.listStateParcel?.let { parcelable ->
                 binding.newsListRV.layoutManager?.onRestoreInstanceState(parcelable)
                 newsViewModel.listStateParcel = null
+            }
+        }
+
+        //Pull-to-Refresh funktion aufrufen / Nachrichten aktualisieren
+       // newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            Log.d("refreshtest", "refreshing")
+            val delayMillis: Long = 1000
+            //Starte eine Coroutine
+            CoroutineScope(Dispatchers.Main).launch {
+                // Warte für delayMillis in Millisekunden
+                delay(delayMillis)
+
+                //Rufe die refreshNews-Methode auf
+                newsViewModel.refreshNews()
+                Log.d("refreshtest2", "refreshfinish")
+
+                // Setze swipeRefreshLayout.isRefreshing auf false
+                binding.swipeRefreshLayout.isRefreshing = false
             }
         }
 

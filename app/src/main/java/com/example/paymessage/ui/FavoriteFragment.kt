@@ -6,49 +6,43 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
 import com.example.paymessage.Adapter.FavoriteAdapter
 import com.example.paymessage.databinding.FragmentFavoriteBinding
 
-// Ein Fragment, das dazu dient, die favorisierten Artikel in der Anwendung anzuzeigen.
+// Ein Fragment, das die Favoriten anzeigt.
 class FavoriteFragment : Fragment() {
 
-    // Eine Instanz des NewsViewModels, das für die Anzeige der favorisierten Artikel verantwortlich ist.
+    // ViewModel für den Zugriff auf die Daten
     private val NewsViewModel: NewsViewModel by activityViewModels()
 
-    // Eine Instanz der View-Bindungsklasse für das Fragment.
+    // View Binding-Objekt für das Fragment-Layout
     private lateinit var binding: FragmentFavoriteBinding
 
 
-    // Die Methode, die das Layout des Fragments erstellt und zurückgibt.
+    // Methode zum Erstellen der Ansicht des Fragments
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Das Layout des Fragments aufblasen und das View Binding-Objekt initialisieren
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
 
     }
 
-
     // Die Methode, die aufgerufen wird, nachdem die Ansicht des Fragments erstellt wurde.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Setzen des RecyclerViews auf eine feste Größe, um die Leistung zu optimieren.
+        // Die Größe der RecyclerView fixieren
         binding.favoritenRV.setHasFixedSize(true)
 
-        // Beobachten der favorisierten Daten im ViewModel und Aktualisieren des RecyclerView-Adapters entsprechend.
+        // Die Liste der favorisierten Daten im ViewModel beobachten und den RecyclerView-Adapter setzen
         NewsViewModel.favoriteDataList.observe(viewLifecycleOwner) {
-            binding.favoritenRV.adapter = FavoriteAdapter(
-                NewsViewModel,
-                it,
-                binding.favoritenRV.layoutManager,
-                NavController(requireContext())
-            )
+            binding.favoritenRV.adapter = FavoriteAdapter(NewsViewModel, it, binding.favoritenRV.layoutManager)
 
-            // Wiederherstellen des vorherigen Zustands der RecyclerView-Liste, falls vorhanden.
-            NewsViewModel.listStateFavorite?.let { parcelable ->
+            // Den vorherigen Zustand der RecyclerView wiederherstellen, falls vorhanden
+            NewsViewModel.listStateFavorite?.let {parcelable ->
                 binding.favoritenRV.layoutManager?.onRestoreInstanceState(parcelable)
                 NewsViewModel.listStateFavorite = null
             }

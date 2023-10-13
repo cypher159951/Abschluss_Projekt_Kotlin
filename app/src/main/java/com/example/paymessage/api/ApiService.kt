@@ -7,20 +7,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
+// Die Basis-URL für die Kommunikation mit dem Server
 const val BASE_URL = "https://www.tagesschau.de"
 
-// Moshi konvertiert Serverantworten in Kotlin Objekte
+// Moshi wird verwendet, um Serverantworten in Kotlin-Objekte zu konvertieren
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
-// Retrofit übernimmt die Kommunikation und übersetzt die Antwort
+// Retrofit wird für die Kommunikation mit dem Server verwendet und übersetzt die Antwort
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .build()
 
-// Das Interface bestimmt, wie mit dem Server kommuniziert wird
+// Das Interface definiert die API-Endpunkte und die Kommunikation mit dem Server
 interface ApiService {
 
     /**

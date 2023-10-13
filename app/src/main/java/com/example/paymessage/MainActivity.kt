@@ -3,92 +3,69 @@ package com.example.paymessage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.paymessage.databinding.ActivityMainBinding
-import com.example.paymessage.ui.NewsViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.lang.Exception
 
 
+// Die Hauptaktivität, die die verschiedenen Fragmente der Anwendung verwaltet.
 class MainActivity : AppCompatActivity() {
 
+    // Eine Instanz des NavController, der für die Navigation zwischen den Fragmenten verantwortlich ist.
     private lateinit var navController: NavController
+
+    // Eine Instanz der View-Bindungsklasse für die Aktivität.
     lateinit var binding: ActivityMainBinding
-    private val fragmentManager: FragmentManager = supportFragmentManager
-    private lateinit var currentFragment: Fragment
-    private lateinit var newsViewModel: NewsViewModel
 
-
-    //Funktioniert nicht 100%ig, app crasht bei bestimmten fragmente wechseln
-
-    //zwischen den Fragmenten wechseln
-//    private fun switchFragment(fragment: Fragment) {
-//        fragmentManager.commit {
-//            replace(R.id.fragmentContainerView, fragment)
-//            setReorderingAllowed(true)
-//            addToBackStack(null)
-//        }
-//    }
-
-
+    // Die Methode, die aufgerufen wird, wenn die Aktivität erstellt wird.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Einrichten der View-Bindung für die Aktivität.
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        // Finden des NavHostFragment und Initialisierung des NavController.
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
-        binding.bottomNavigationView.visibility = View.GONE
+        // Die Sichtbarkeit der Bottom Navigation Bar auf der Hauptaktivität ausblenden.
+        //binding.bottomNavigationView.visibility = View.GONE
 
         try {
+            // Setzen des ItemSelectedListeners für die Bottom Navigation Bar.
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.favorite -> {
-
+                        // Navigiere zum Favoriten-Fragment, wenn ausgewählt.
                         val currentDestination = navController.currentDestination
                         if (currentDestination?.id != R.id.favoriteFragment) {
-                            //Navigate to Favorite
                             navController.navigate(
                                 R.id.favoriteFragment
                             )
                         }
-
-                        //einmal oben eine Funktion für, da immerwieder 3x angewendet wird, das man nicht immmer alle neu
-                        //schreiben muss
-                        //  switchFragment(FavoriteFragment())
                         true
                     }
 
-
                     R.id.settings -> {
+                        // Navigiere zum Einstellungen-Fragment, wenn ausgewählt.
                         val currentDestination = navController.currentDestination
                         if (currentDestination?.id != R.id.settingsFragment) {
-                            //Navigate to Favorite
                             navController.navigate(
                                 R.id.settingsFragment
                             )
                         }
-                        // switchFragment(SettingsFragment())
                         true
                     }
 
 
                     R.id.home -> {
+                        // Navigiere zum Home-Fragment, wenn ausgewählt.
                         val currentDestination = navController.currentDestination
                         if (currentDestination?.id != R.id.homeFragment) {
                             //Navigate to Favorite
@@ -96,7 +73,6 @@ class MainActivity : AppCompatActivity() {
                                 R.id.homeFragment
                             )
                         }
-                        //  switchFragment(HomeFragment())
                         true
                     }
 
@@ -112,9 +88,6 @@ class MainActivity : AppCompatActivity() {
         ) {
             Log.e("Settings", "${e}")
         }
-
-
-
     }
 }
 

@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.paymessage.api.TagesschauApi
+import com.example.paymessage.data.datamodels.Content
 import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.data.datamodels.TagesschauDataBase
 import kotlinx.coroutines.GlobalScope
@@ -115,6 +116,9 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     fun getliked(): LiveData<List<News>> {
         return newsDatabase.dao.getLiked()
     }
+
+
+
 
 }
 

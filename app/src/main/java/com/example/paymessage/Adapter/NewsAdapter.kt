@@ -86,12 +86,8 @@ class NewsAdapter(
             listState?.let { viewModel.saveListState(it) }
             //Datenbank updaten
             viewModel.updateLikestatusInDb(like)
-
-
         }
-
     }
-
 }
 
 

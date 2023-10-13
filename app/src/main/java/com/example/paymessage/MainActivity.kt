@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
 
-
                     R.id.home -> {
                         // Navigiere zum Home-Fragment, wenn ausgewählt.
                         val currentDestination = navController.currentDestination
@@ -83,9 +82,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        } catch (
-            e: Exception
-        ) {
+        } catch (e: Exception) {
             Log.e("Settings", "${e}")
         }
     }

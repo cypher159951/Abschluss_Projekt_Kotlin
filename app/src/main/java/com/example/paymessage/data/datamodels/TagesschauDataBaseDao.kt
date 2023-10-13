@@ -21,8 +21,6 @@ interface TagesschauDataBaseDao {
     @Update
     fun updateItem(news: News)
 
-    @Delete
-    fun deleteItem(news: News)
 
     @Query("SELECT * FROM tagesschau WHERE sophoraId = :itemId")
     fun getItemById(itemId: String): News

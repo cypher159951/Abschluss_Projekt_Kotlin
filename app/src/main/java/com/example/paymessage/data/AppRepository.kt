@@ -9,10 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.paymessage.api.TagesschauApi
 import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.data.datamodels.TagesschauDataBase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Locale
 
 const val TAG = "RepositoryTAG"
@@ -62,6 +60,7 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     }
 
     suspend fun deleteOldData() {
+
         //Kalender erstellen
         val twoDaysAgo = Calendar.getInstance()
         //2 Tage vom aktuellen Datum zurück gehen

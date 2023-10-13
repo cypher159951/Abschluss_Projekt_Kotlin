@@ -13,26 +13,39 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.Locale
 
+// Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 const val TAG = "RepositoryTAG"
 
+// Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 class AppRepository(val api: TagesschauApi, private val newsDatabase: TagesschauDataBase) {
 
+    // Mutable LiveData-Instanz für News-Objekte.
     private val _news = MutableLiveData<List<News>>()
 
+    // LiveData-Instanz, die von außerhalb lesbar ist und auf die _news verweist.
     val news: LiveData<List<News>>
         get() = _news
 
+
+    // Mutable LiveData-Instanz für ein einzelnes News-Objekt.
     private val _newsdetail = MutableLiveData<News>()
+
+    // LiveData-Instanz, die von außerhalb lesbar ist und auf _newsdetail verweist.
     val newsdetail: MutableLiveData<News>
         get() = _newsdetail
 
+
+    // LiveData-Liste von News-Objekten, die aus der Datenbank gelesen werden.
     var newsDataList: LiveData<List<News>>
 
+
+    // Initialisierung der newsDataList durch Abrufen aller Elemente aus der Datenbank.
     init {
         newsDataList = newsDatabase.dao.getAllItems()
     }
 
 
+    // Eine suspend-Funktion, die News von der API abruft und in die Datenbank einfügt.
     suspend fun getNews() {
         deleteOldData()
         try {
@@ -47,10 +60,10 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     }
 
 
+    // Eine Funktion, die ein einzelnes News-Objekt in die Datenbank einfügt.
     fun insertNewsFromApi(itemData: News) {
         try {
             GlobalScope.launch {
-                // var sortedNewsList = itemData.value?.sortedByDescending
                 Log.d(ContentValues.TAG, "getItems Data: $itemData")
                 newsDatabase.dao.insertall(itemData)
             }
@@ -59,7 +72,8 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         }
     }
 
-    suspend fun deleteOldData() {
+    // Eine Funktion, die alte Datensätze in der Datenbank löscht.
+    fun deleteOldData() {
 
         //Kalender erstellen
         val twoDaysAgo = Calendar.getInstance()
@@ -67,7 +81,8 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         twoDaysAgo.add(Calendar.DAY_OF_YEAR, -2)
 
         //Kalender umforamtieren damit es mit dem in der Datenbank übereinstimmt
-        val formattedTwoDaysAgo = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(twoDaysAgo.time)
+        val formattedTwoDaysAgo =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(twoDaysAgo.time)
 
         //Daten aus der Datenbank löschen die älter als 2 Tage sind
         try {
@@ -77,19 +92,14 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         }
     }
 
-    fun getAll(): LiveData<List<News>> {
-        return newsDatabase.dao.getAllItems()
-    }
 
-    fun checkData(): Int {
-        return newsDatabase.dao.checkDataCount()
-    }
-
-
+    // Eine Funktion, die ein einzelnes News-Objekt anhand seiner ID aus der Datenbank abruft.
     fun getNewsDetail(id: String): News {
         return newsDatabase.dao.getItemById(id)
     }
 
+
+    // Eine Funktion, die den Like-Status eines News-Objekts in der Datenbank aktualisiert.
     fun updateLikeStatus(isLike: News) {
         try {
             GlobalScope.launch {
@@ -100,6 +110,8 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         }
     }
 
+
+    // Eine Funktion, die alle als 'liked' markierten News-Objekte aus der Datenbank abruft.
     fun getliked(): LiveData<List<News>> {
         return newsDatabase.dao.getLiked()
     }

@@ -17,32 +17,32 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-
+// Eine Klasse, die als ViewModel für die News-Funktionalität der Anwendung fungiert.
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
+    // Instanz der Datenbank für Tagesschau.
     private val tagesschauDatabase = TagesschauDataBase(application)
+
+    // Instanz des Repositories, das die Schnittstelle zwischen Datenbank und API bildet.
     private val repository = AppRepository(TagesschauApi, tagesschauDatabase)
 
-
+    // LiveData-Liste von News-Objekten, die aus dem Repository abgerufen werden.
     var newsDataList: LiveData<List<News>> = repository.newsDataList
 
-
+    // LiveData-Liste von als 'liked' markierten News-Objekten, die aus dem Repository abgerufen werden.
     val favoriteDataList: LiveData<List<News>> = repository.getliked()
 
-    // val news = repository.news
-
+    // LiveData-Objekt, das das Detail einer einzelnen News aus dem Repository enthält.
     val newsDetail = repository.newsdetail
 
-   // val sortedNews: MutableLiveData<List<News>?> = repository.getSortedNews()
 
-
+    // Initialisierungsfunktion, die die Daten lädt, wenn das ViewModel erstellt wird.
     init {
         loadData()
-        //  sortedNews.observeForever {
-    //}
     }
 
 
+    // Funktion, die Daten vom Repository abruft und lädt.
     @SuppressLint("SuspiciousIndentation")
     fun loadData() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -52,57 +52,44 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    //für HomeNews position speichern
+    // Variable zum Speichern des Zustands der Liste für HomeNews. - Hilfe von Delrich
     var listStateParcel: Parcelable? = null
 
+
+    // Funktion zum Speichern des Listenzustands für HomeNews.   - Hilfe von Delrich
     fun saveListState(parcel: Parcelable) {
         listStateParcel = parcel
     }
 
 
-
-    //für favoriten position speichern
+    // Variable zum Speichern des Zustands der Liste für Favoriten.
     var listStateFavorite: Parcelable? = null
 
+
+    // Funktion zum Speichern des Listenzustands für Favoriten.
     fun saveListStateFavorite(parcel: Parcelable) {
         listStateFavorite = parcel
     }
 
 
-    fun insertDataFromApi(itemData: News) {
-        viewModelScope.launch {
-            repository.insertNewsFromApi(itemData)
-        }
-    }
-
-
-
+    // Funktion zum Laden von Detailinformationen zu einer bestimmten News.
     fun loadNewsDetail(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val detail = repository.getNewsDetail(id)
-
             newsDetail.postValue(detail)
-
         }
     }
 
-    fun updateLikestatusInDb(isliked: News){
+
+    // Funktion zum Aktualisieren des Like-Status eines News-Objekts in der Datenbank.
+    fun updateLikestatusInDb(isliked: News) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateLikeStatus(isliked)
         }
     }
 
-    fun loadLiked(){
-        viewModelScope.launch {
-            repository.getliked()
-        }
-    }
 
-    fun prepareShareText(newsItem: News): String {
-        return "${newsItem.title}\n\n${newsItem.content}"
-    }
-
-    //funktion für pull-to-refresh
+    // Funktion für pull-to-refresh, um die neuesten News abzurufen.
     fun refreshNews() {
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -110,7 +97,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
         }
     }
-
 }
 
 

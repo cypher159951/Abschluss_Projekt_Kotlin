@@ -36,7 +36,8 @@ interface TagesschauDataBaseDao {
     @Query("SELECT * FROM tagesschau ORDER by date DESC")
     fun getAllItems(): LiveData<List<News>>
 
-
+    @Query("DELETE FROM tagesschau WHERE date < :date")
+    fun deleteOldItems(date: String)
 
 
 

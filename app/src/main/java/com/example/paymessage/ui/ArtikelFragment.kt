@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.example.paymessage.data.AppRepository
 import com.example.paymessage.databinding.FragmentArtikelBinding
 
 // Ein Fragment, das dazu dient, einen einzelnen Artikel in der Anwendung anzuzeigen.
@@ -33,6 +34,7 @@ class ArtikelFragment : Fragment() {
     // Die Methode, die aufgerufen wird, nachdem die Ansicht des Fragments erstellt wurde.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
 
         // Überprüfen, ob Argumente vorhanden sind, und Laden der Detailinformationen für den Artikel.

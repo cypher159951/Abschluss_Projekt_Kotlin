@@ -4,6 +4,8 @@ import android.content.ContentValues
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.util.Log
+import android.webkit.WebSettings
+import android.webkit.WebView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.paymessage.api.TagesschauApi
@@ -79,7 +81,7 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         //Kalender erstellen
         val twoDaysAgo = Calendar.getInstance()
         //2 Tage vom aktuellen Datum zurück gehen
-        twoDaysAgo.add(Calendar.DAY_OF_YEAR, -2)
+        twoDaysAgo.add(Calendar.DAY_OF_YEAR, -5)
 
         //Kalender umforamtieren damit es mit dem in der Datenbank übereinstimmt
         val formattedTwoDaysAgo =
@@ -117,6 +119,27 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
         return newsDatabase.dao.getLiked()
     }
 
+
+
+
+    //TODO Html code filtern
+
+
+    // Eine Methode zum Laden von HTML-Inhalten in eine WebView.
+    fun loadHtmlContentIntoWebView(webView: WebView, htmlContent: String) {
+        try {
+
+            val settings: WebSettings = webView.settings
+            settings.javaScriptEnabled = true
+            settings.defaultTextEncodingName = "utf-8"
+            webView.loadData(htmlContent, "text/html", "UTF-8")
+            // Oder mit einer Basis-URL
+            // val baseUrl = "file:///android_asset/"
+            // webView.loadDataWithBaseURL(baseUrl, htmlContent, "text/html", "UTF-8", null)
+        } catch (e: Exception) {
+            Log.e(TAG, "Fehler beim Laden des HTML-Inhalts in die WebView: $e")
+        }
+    }
 
 
 

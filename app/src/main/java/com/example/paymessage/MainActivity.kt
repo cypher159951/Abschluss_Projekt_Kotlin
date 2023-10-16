@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -85,6 +87,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("Settings", "${e}")
         }
+
+
+
     }
 }
 

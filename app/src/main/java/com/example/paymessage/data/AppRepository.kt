@@ -122,24 +122,6 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
 
 
 
-    //TODO Html code filtern
-
-
-    // Eine Methode zum Laden von HTML-Inhalten in eine WebView.
-    fun loadHtmlContentIntoWebView(webView: WebView, htmlContent: String) {
-        try {
-
-            val settings: WebSettings = webView.settings
-            settings.javaScriptEnabled = true
-            settings.defaultTextEncodingName = "utf-8"
-            webView.loadData(htmlContent, "text/html", "UTF-8")
-            // Oder mit einer Basis-URL
-            // val baseUrl = "file:///android_asset/"
-            // webView.loadDataWithBaseURL(baseUrl, htmlContent, "text/html", "UTF-8", null)
-        } catch (e: Exception) {
-            Log.e(TAG, "Fehler beim Laden des HTML-Inhalts in die WebView: $e")
-        }
-    }
 
 
 

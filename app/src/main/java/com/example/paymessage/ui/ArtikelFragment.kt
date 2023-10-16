@@ -36,7 +36,6 @@ class ArtikelFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         // Überprüfen, ob Argumente vorhanden sind, und Laden der Detailinformationen für den Artikel.
         arguments?.let {
             val id = it.getString("id")
@@ -46,14 +45,58 @@ class ArtikelFragment : Fragment() {
             viewModel.newsDetail.observe(viewLifecycleOwner) {
                 if (it.content.isNotEmpty()) {
 
+
+                    val htmlCodeTitle = it.content[0].value
+                    binding.titleArtikelTV.text =
+                        htmlCodeTitle.replace("<strong>", "").replace("</strong>", "")
                     // Setzen des Titels und Inhalts des Artikels in die entsprechenden Ansichtselemente.
-                    binding.titleArtikelTV.text = it.content[0].value
+                    //   binding.titleArtikelTV.text = it.content[0].value
 
                     var text: String = ""
                     for (i in 1..it.content.size - 1) {
                         text += it.content[i].value
                     }
-                    binding.artikelTV.text = text
+
+
+                    // Hier iteriere ich durch diese Liste und führe die Ersetzungen in filteredHtml durch.
+                    // Das Ergebnis wird dann dem artikelTV zugewiesen.
+                    val htmlCode = text
+                    val replacements = listOf(
+                        "<ul" to "",
+                        "<li" to "",
+                        "</li" to " ",
+                        "</ul>" to "",
+                        "<h2>" to "",
+                        "</h2>" to "\n",
+                        ">>" to "\n\n",
+                        "<em>" to "",
+                        "</em>" to "",
+                        "<strong>" to "",
+                        "</strong>" to "",
+                        "<a" to ""
+                    )
+
+                    var filteredHtml = htmlCode
+                    for ((oldValue, newValue) in replacements) {
+                        filteredHtml = filteredHtml.replace(oldValue, newValue)
+                    }
+                    binding.artikelTV.text = filteredHtml
+
+
+//                    val htmlCode = text
+//                    binding.artikelTV.text = htmlCode
+//                        .replace("<ul", "")
+//                        .replace("<li", "")
+//                        .replace("</li", " ")
+//                        .replace("</ul>", "")
+//                        .replace("<h2>", "")
+//                        .replace("</h2>", "n")
+//                        .replace(">>", "\n\n")
+//                        .replace("<em>", "")
+//                        .replace("</em>", "")
+//                        .replace("<strong>", "")
+
+                    //   binding.artikelTV.text = text
 
                     // Laden und Anzeigen des Teaser-Bilds des Artikels.
                     binding.artikelImageIV.load(it.teaserImage.imageVariants.image144)

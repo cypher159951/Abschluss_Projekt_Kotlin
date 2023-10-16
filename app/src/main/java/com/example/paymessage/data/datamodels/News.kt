@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.paymessage.data.database.Tagesschau
 import com.squareup.moshi.Json
+import java.net.URL
 
 
 /**
@@ -26,6 +27,9 @@ data class News(
     val date: String,
     val content: List<Content> = emptyList(),
     val teaserImage: TeaserImage,
+    val updateCheckUrl: String,
+
+
 
     var isLiked: Boolean = false,
     )

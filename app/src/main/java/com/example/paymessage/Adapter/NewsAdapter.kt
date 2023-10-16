@@ -1,7 +1,10 @@
 package com.example.paymessage.Adapter
 
+
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -13,6 +16,7 @@ import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.databinding.NewsItemBinding
 import com.example.paymessage.ui.HomeFragmentDirections
 import com.example.paymessage.ui.NewsViewModel
+
 
 class NewsAdapter(
 
@@ -72,6 +76,26 @@ class NewsAdapter(
         }
 
 
+
+
+        //Share Funktion
+        holder.binding.shareBTN.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+
+            //Das Api2u aus der URL heraus filtern damit der link funktioniert
+            val updateUrl = item.updateCheckUrl.replace("/api2u", "")
+
+            //Den share Text bestimmen was beim teilen angezeigt werden soll
+            val shareText = "${item.title}\n${updateUrl}"
+
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
+            shareIntent.type = "text/plain"
+            val shareIntentChooser = Intent.createChooser(shareIntent, null)
+            holder.binding.root.context.startActivity(shareIntentChooser)
+        }
+
+
+
         // Bestimmt, ob der Artikel als Favorit markiert ist oder nicht
         val likeArtikel = if (item.isLiked) R.drawable.baseline_star_24
         else R.drawable.baseline_star_outline_24
@@ -99,3 +123,6 @@ object NewsDiffCallBack : DiffUtil.ItemCallback<News>() {
 
     override fun areContentsTheSame(oldItem: News, newItem: News) = oldItem == newItem
 }
+
+
+

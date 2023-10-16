@@ -82,7 +82,7 @@ class NewsAdapter(
         holder.binding.shareBTN.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND)
 
-            //Das Api2u aus der URL heraus filtern damit der link funktioniert
+            //Das "/api2u" aus der URL heraus filtern damit der link funktioniert
             val updateUrl = item.updateCheckUrl.replace("/api2u", "")
 
             //Den share Text bestimmen was beim teilen angezeigt werden soll

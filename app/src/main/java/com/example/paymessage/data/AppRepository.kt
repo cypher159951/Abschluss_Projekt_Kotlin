@@ -3,24 +3,31 @@ package com.example.paymessage.data
 import android.content.ContentValues
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
-import android.webkit.WebSettings
-import android.webkit.WebView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.paymessage.api.TagesschauApi
-import com.example.paymessage.data.datamodels.Content
+import com.example.paymessage.data.autoRefresh.RepositoryCallback
 import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.data.datamodels.TagesschauDataBase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
+import java.util.Timer
+import java.util.TimerTask
 
 // Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 const val TAG = "RepositoryTAG"
 
+// 30 Minuten in Millisekunden
+private const val UPDATE_INTERVAL: Long = 3000
+
 // Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
-class AppRepository(val api: TagesschauApi, private val newsDatabase: TagesschauDataBase) {
+class AppRepository(private val callback: RepositoryCallback, val api: TagesschauApi, private val newsDatabase: TagesschauDataBase) {
 
     // Mutable LiveData-Instanz für News-Objekte.
     private val _news = MutableLiveData<List<News>>()
@@ -45,7 +52,70 @@ class AppRepository(val api: TagesschauApi, private val newsDatabase: Tagesschau
     // Initialisierung der newsDataList durch Abrufen aller Elemente aus der Datenbank.
     init {
         newsDataList = newsDatabase.dao.getAllItems()
+        startDataUpdate()
     }
+
+
+    private fun startDataUpdate() {
+        val timer = Timer()
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                Log.d(TAG, "Automatische Aktualisierung gestartet")
+                // Führe hier deine Aktualisierungsaktionen über die API durch
+                fetchDataFromApiAndUpdateDB()
+            }
+        }, 0, UPDATE_INTERVAL)
+    }
+
+    private fun fetchDataFromApiAndUpdateDB() {
+
+
+        // Hier die Logik zum Abrufen von Daten von der API und Aktualisieren der lokalen Datenbank einfügen
+        GlobalScope.launch(Dispatchers.IO) {
+            val handler = Handler(Looper.getMainLooper())
+
+            // Zeige den Ladebalken oder die Ladekreis-Animation an
+            handler.post {
+                callback.showLoading()
+            }
+            try {
+                // Holen Sie die Daten von der API
+                val newsFromApi = api.retrofitService.getNews().news
+
+                // Löschen Sie alte Daten
+                deleteOldData()
+
+                // Fügen Sie die neuen Daten in die lokale Datenbank ein
+                for (oneNews in newsFromApi) {
+                    insertNewsFromApi(oneNews)
+                }
+
+                // Simuliere einen Ladevorgang von 2-3 Sekunden
+                delay(2000)
+
+                // Verberge den Ladebalken oder die Ladekreis-Animation nach Abschluss des Ladevorgangs
+                handler.post {
+                    callback.hideLoading()
+                }
+
+                Log.d(TAG, "Automatische Aktualisierung erfolgreich")
+            } catch (e: Exception) {
+                Log.e(TAG, "Fehler bei der automatischen Aktualisierung: $e")
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // Eine suspend-Funktion, die News von der API abruft und in die Datenbank einfügt.

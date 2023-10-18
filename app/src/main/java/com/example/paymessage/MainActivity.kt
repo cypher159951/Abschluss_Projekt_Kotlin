@@ -4,18 +4,22 @@ package com.example.paymessage
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.widget.ProgressBar
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.paymessage.databinding.ActivityMainBinding
+import com.example.paymessage.ui.NewsViewModel
 import java.lang.Exception
+
+
 
 
 // Die Hauptaktivität, die die verschiedenen Fragmente der Anwendung verwaltet.
 class MainActivity : AppCompatActivity() {
+
+
 
     // Eine Instanz des NavController, der für die Navigation zwischen den Fragmenten verantwortlich ist.
     private lateinit var navController: NavController
@@ -26,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     // Die Methode, die aufgerufen wird, wenn die Aktivität erstellt wird.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         // Einrichten der View-Bindung für die Aktivität.
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -88,8 +93,9 @@ class MainActivity : AppCompatActivity() {
             Log.e("Settings", "${e}")
         }
 
-
-
     }
+
+
 }
+
 

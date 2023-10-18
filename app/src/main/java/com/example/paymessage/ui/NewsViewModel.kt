@@ -3,14 +3,13 @@ package com.example.paymessage.ui
 import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Parcelable
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.viewModelScope
 import com.example.paymessage.api.TagesschauApi
 import com.example.paymessage.data.AppRepository
+import com.example.paymessage.data.autoRefresh.NewsRepositoryCallback
 import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.data.datamodels.TagesschauDataBase
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +22,11 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     // Instanz der Datenbank für Tagesschau.
     private val tagesschauDatabase = TagesschauDataBase(application)
 
+    // Instanz des Repository-Callbacks
+    private val repositoryCallback = NewsRepositoryCallback()
+
     // Instanz des Repositories, das die Schnittstelle zwischen Datenbank und API bildet.
-    private val repository = AppRepository(TagesschauApi, tagesschauDatabase)
+    private val repository = AppRepository(repositoryCallback, TagesschauApi, tagesschauDatabase)
 
     // LiveData-Liste von News-Objekten, die aus dem Repository abgerufen werden.
     var newsDataList: LiveData<List<News>> = repository.newsDataList

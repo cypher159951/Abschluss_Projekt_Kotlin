@@ -10,6 +10,8 @@
         tools:context=".MainActivity">
 
 
+
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -34,6 +36,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav_menu"
             tools:ignore="MissingConstraints" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

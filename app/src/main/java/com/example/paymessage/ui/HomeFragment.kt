@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.paymessage.Adapter.NewsAdapter
 import com.example.paymessage.MainActivity
 import com.example.paymessage.R
+import com.example.paymessage.data.autoRefresh.RepositoryCallback
 import com.example.paymessage.databinding.FragmentHomeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +24,8 @@ import kotlinx.coroutines.launch
 
 // Ein Fragment, das die Startseite der Anwendung darstellt.
 class HomeFragment : Fragment() {
+
+    private lateinit var progressBar: ProgressBar
 
     // Instanz des NewsViewModels, um die News-Daten zu verwalten.
     private val newsViewModel: NewsViewModel by activityViewModels()
@@ -41,7 +45,10 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
 
+
+
     }
+
 
 
     // Die Methode, die aufgerufen wird, nachdem die Ansicht des Fragments erstellt wurde.
@@ -106,6 +113,7 @@ class HomeFragment : Fragment() {
         listState?.let { newsViewModel.saveListState(it) }
         super.onDestroyView()
     }
+
 }
 
 

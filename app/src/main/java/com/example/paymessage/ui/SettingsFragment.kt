@@ -34,7 +34,7 @@ class SettingsFragment : Fragment() {
 
         // Die Sichtbarkeit der Bottom Navigation Bar auf der Hauptaktivität einstellen.
         (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.VISIBLE
-        //TODO beim wechseln auf nachtmodus flackert der home button, ÜBERPRÜFEN!
+        
 
         // Setzen des Nachtmodus-Switch-Listeners.
         binding.nachtModusSWITCH.setOnCheckedChangeListener { _, isChecked ->

@@ -31,9 +31,10 @@ private const val UPDATE_INTERVAL: Long = 10000
 // Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 class AppRepository(
     private val context: Context,
-   // private val callback: RepositoryCallback,
+    private val callback: RepositoryCallback,
     val api: TagesschauApi,
-    private val newsDatabase: TagesschauDataBase) {
+    private val newsDatabase: TagesschauDataBase
+) {
 
     // Mutable LiveData-Instanz für News-Objekte.
     private val _news = MutableLiveData<List<News>>()
@@ -62,6 +63,7 @@ class AppRepository(
         observeDatabase()
     }
 
+
     private fun observeDatabase() {
         newsDataList.observeForever { newsList ->
             // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert
@@ -72,10 +74,6 @@ class AppRepository(
             }
         }
     }
-
-
-
-
 
 
     private fun startDataUpdate() {
@@ -90,14 +88,16 @@ class AppRepository(
     }
 
     private fun fetchDataFromApiAndUpdateDB() {
+
+
         // Hier die Logik zum Abrufen von Daten von der API und Aktualisieren der lokalen Datenbank einfügen
         GlobalScope.launch(Dispatchers.IO) {
             val handler = Handler(Looper.getMainLooper())
 
-//            // Zeige den Ladebalken oder die Ladekreis-Animation an
-//            handler.post {
-//                callback.showLoading()
-//            }
+            // Zeige den Ladebalken oder die Ladekreis-Animation an
+            handler.post {
+                callback.showLoading()
+            }
             try {
                 // Holen Sie die Daten von der API
                 val newsFromApi = api.retrofitService.getNews().news
@@ -105,12 +105,23 @@ class AppRepository(
                 // Löschen Sie alte Daten
                 deleteOldData()
 
+                //Mit dem ausgeklammerten zeigt er im LogCat alle daten an
+                //wenn die ausgeklammert sind und ich den unteren code verwende werden die daten nciht angezeigt
+
 //                // Fügen Sie die neuen Daten in die lokale Datenbank ein
 //                for (oneNews in newsFromApi) {
 //                    insertNewsFromApi(oneNews)
 //                }
+//
+//                // Simuliere einen Ladevorgang von 2-3 Sekunden
+//                delay(2000)
+//
+//                // Verberge den Ladebalken oder die Ladekreis-Animation nach Abschluss des Ladevorgangs
+//                handler.post {
+//                    callback.hideLoading()
+//               }
 
-                // Vergleichen Sie die neuen Daten mit den in der Datenbank vorhandenen Daten
+                // Vergleiche die neuen Daten mit den in der Datenbank vorhandenen Daten
                 val oldNews = newsDataList.value
                 if (oldNews != null && oldNews.isNotEmpty()) {
                     for (new in newsFromApi) {
@@ -131,12 +142,11 @@ class AppRepository(
                         }
                     }
                 } else {
-                    // Wenn die Datenbank leer ist, fügen Sie einfach alle Daten hinzu
+                    // Wenn die Datenbank leer ist, füge einfach alle Daten hinzu
                     for (oneNews in newsFromApi) {
                         insertNewsFromApi(oneNews)
                     }
                 }
-
 
                 Log.d(TAG, "Automatische Aktualisierung erfolgreich")
             } catch (e: Exception) {
@@ -144,18 +154,6 @@ class AppRepository(
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // Eine suspend-Funktion, die News von der API abruft und in die Datenbank einfügt.
@@ -228,11 +226,6 @@ class AppRepository(
     fun getliked(): LiveData<List<News>> {
         return newsDatabase.dao.getLiked()
     }
-
-
-
-
-
 
 
 }

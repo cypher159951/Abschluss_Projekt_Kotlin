@@ -155,6 +155,8 @@ class AppRepository(
         }
     }
 
+    //test
+
 
     // Eine suspend-Funktion, die News von der API abruft und in die Datenbank einfügt.
     suspend fun getNews() {

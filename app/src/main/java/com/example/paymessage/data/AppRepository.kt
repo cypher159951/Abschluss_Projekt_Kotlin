@@ -1,6 +1,7 @@
 package com.example.paymessage.data
 
 import android.content.ContentValues
+import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Handler
@@ -12,6 +13,7 @@ import com.example.paymessage.api.TagesschauApi
 import com.example.paymessage.data.autoRefresh.RepositoryCallback
 import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.data.datamodels.TagesschauDataBase
+import com.example.paymessage.data.pushNotification.NotificationHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -24,10 +26,14 @@ import java.util.TimerTask
 const val TAG = "RepositoryTAG"
 
 // 30 Minuten in Millisekunden
-private const val UPDATE_INTERVAL: Long = 3000
+private const val UPDATE_INTERVAL: Long = 10000
 
 // Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
-class AppRepository(private val callback: RepositoryCallback, val api: TagesschauApi, private val newsDatabase: TagesschauDataBase) {
+class AppRepository(
+    private val context: Context,
+    private val callback: RepositoryCallback,
+    val api: TagesschauApi,
+    private val newsDatabase: TagesschauDataBase) {
 
     // Mutable LiveData-Instanz für News-Objekte.
     private val _news = MutableLiveData<List<News>>()
@@ -53,7 +59,23 @@ class AppRepository(private val callback: RepositoryCallback, val api: Tagesscha
     init {
         newsDataList = newsDatabase.dao.getAllItems()
         startDataUpdate()
+        observeDatabase()
     }
+
+    private fun observeDatabase() {
+        newsDataList.observeForever { newsList ->
+            // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert
+            if (newsList.isNotEmpty()) {
+                // Hier können Sie den Code für die Benachrichtigung implementieren
+                val notificationHandler = NotificationHandler(context)
+                notificationHandler.displayNotification("Neue Nachrichten", "Schau dir die aktuellen News an.")
+            }
+        }
+    }
+
+
+
+
 
 
     private fun startDataUpdate() {
@@ -68,8 +90,6 @@ class AppRepository(private val callback: RepositoryCallback, val api: Tagesscha
     }
 
     private fun fetchDataFromApiAndUpdateDB() {
-
-
         // Hier die Logik zum Abrufen von Daten von der API und Aktualisieren der lokalen Datenbank einfügen
         GlobalScope.launch(Dispatchers.IO) {
             val handler = Handler(Looper.getMainLooper())

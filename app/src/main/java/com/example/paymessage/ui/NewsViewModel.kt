@@ -26,7 +26,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private val repositoryCallback = NewsRepositoryCallback()
 
     // Instanz des Repositories, das die Schnittstelle zwischen Datenbank und API bildet.
-    private val repository = AppRepository(repositoryCallback, TagesschauApi, tagesschauDatabase)
+    private val repository = AppRepository(application, repositoryCallback, TagesschauApi, tagesschauDatabase)
 
     // LiveData-Liste von News-Objekten, die aus dem Repository abgerufen werden.
     var newsDataList: LiveData<List<News>> = repository.newsDataList

@@ -31,7 +31,7 @@ private const val UPDATE_INTERVAL: Long = 10000
 // Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 class AppRepository(
     private val context: Context,
-    private val callback: RepositoryCallback,
+   // private val callback: RepositoryCallback,
     val api: TagesschauApi,
     private val newsDatabase: TagesschauDataBase) {
 
@@ -94,10 +94,10 @@ class AppRepository(
         GlobalScope.launch(Dispatchers.IO) {
             val handler = Handler(Looper.getMainLooper())
 
-            // Zeige den Ladebalken oder die Ladekreis-Animation an
-            handler.post {
-                callback.showLoading()
-            }
+//            // Zeige den Ladebalken oder die Ladekreis-Animation an
+//            handler.post {
+//                callback.showLoading()
+//            }
             try {
                 // Holen Sie die Daten von der API
                 val newsFromApi = api.retrofitService.getNews().news
@@ -105,18 +105,38 @@ class AppRepository(
                 // Löschen Sie alte Daten
                 deleteOldData()
 
-                // Fügen Sie die neuen Daten in die lokale Datenbank ein
-                for (oneNews in newsFromApi) {
-                    insertNewsFromApi(oneNews)
+//                // Fügen Sie die neuen Daten in die lokale Datenbank ein
+//                for (oneNews in newsFromApi) {
+//                    insertNewsFromApi(oneNews)
+//                }
+
+                // Vergleichen Sie die neuen Daten mit den in der Datenbank vorhandenen Daten
+                val oldNews = newsDataList.value
+                if (oldNews != null && oldNews.isNotEmpty()) {
+                    for (new in newsFromApi) {
+                        var isNew = true
+                        for (old in oldNews) {
+                            if (new.sophoraId == old.sophoraId) {
+                                isNew = false
+                                break
+                            }
+                        }
+                        if (isNew) {
+                            // Neue Daten in die Datenbank einfügen
+                            insertNewsFromApi(new)
+
+                            // Push-Benachrichtigung senden, wenn neue Daten gefunden wurden
+                            val notificationHandler = NotificationHandler(context)
+                            notificationHandler.displayNotification("Neue Nachricht", "Es gibt neue Nachrichten.")
+                        }
+                    }
+                } else {
+                    // Wenn die Datenbank leer ist, fügen Sie einfach alle Daten hinzu
+                    for (oneNews in newsFromApi) {
+                        insertNewsFromApi(oneNews)
+                    }
                 }
 
-                // Simuliere einen Ladevorgang von 2-3 Sekunden
-                delay(2000)
-
-                // Verberge den Ladebalken oder die Ladekreis-Animation nach Abschluss des Ladevorgangs
-                handler.post {
-                    callback.hideLoading()
-                }
 
                 Log.d(TAG, "Automatische Aktualisierung erfolgreich")
             } catch (e: Exception) {

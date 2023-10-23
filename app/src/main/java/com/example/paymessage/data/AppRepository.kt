@@ -81,7 +81,7 @@ class AppRepository(
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 Log.d(TAG, "Automatische Aktualisierung gestartet")
-                // Führe hier deine Aktualisierungsaktionen über die API durch
+                // Führe hier Aktualisierungsaktionen über die API durch
                 fetchDataFromApiAndUpdateDB()
             }
         }, 0, UPDATE_INTERVAL)
@@ -155,8 +155,8 @@ class AppRepository(
         }
     }
 
-    //test!!!
-
+//TODO GIT und push problem beheben
+//TODO push benachrichtigung  überprüfen das der auch im hintergrund aktualisiert und push notification schickt
 
     // Eine suspend-Funktion, die News von der API abruft und in die Datenbank einfügt.
     suspend fun getNews() {

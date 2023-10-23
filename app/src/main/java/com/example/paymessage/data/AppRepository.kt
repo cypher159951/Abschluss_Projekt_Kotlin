@@ -87,6 +87,7 @@ class AppRepository(
         }, 0, UPDATE_INTERVAL)
     }
 
+
     private fun fetchDataFromApiAndUpdateDB() {
 
 

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     // Die Methode, die aufgerufen wird, wenn die Aktivität erstellt wird.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-   startNotificationTestActivity()
+  // startNotificationTestActivity()
 
         // Einrichten der View-Bindung für die Aktivität.
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -95,10 +95,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-        private fun startNotificationTestActivity() {
-        val intent = Intent(this, NotificationTestActivity::class.java)
-        startActivity(intent)
-    }
+//        private fun startNotificationTestActivity() {
+//        val intent = Intent(this, NotificationTestActivity::class.java)
+//        startActivity(intent)
+//    }
 
 }
 

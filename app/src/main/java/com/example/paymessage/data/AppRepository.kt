@@ -26,7 +26,7 @@ import java.util.TimerTask
 const val TAG = "RepositoryTAG"
 
 // 30 Minuten in Millisekunden
-private const val UPDATE_INTERVAL: Long = 10000
+private const val UPDATE_INTERVAL: Long = 5000
 
 // Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 class AppRepository(
@@ -109,7 +109,7 @@ class AppRepository(
                 //Mit dem ausgeklammerten zeigt er im LogCat alle daten an
                 //wenn die ausgeklammert sind und ich den unteren code verwende werden die daten nciht angezeigt
 
-//                // Fügen Sie die neuen Daten in die lokale Datenbank ein
+//                // Füge die neuen Daten in die lokale Datenbank ein
 //                for (oneNews in newsFromApi) {
 //                    insertNewsFromApi(oneNews)
 //                }
@@ -156,8 +156,6 @@ class AppRepository(
         }
     }
 
-//TODO GIT und push problem beheben
-//TODO push benachrichtigung  überprüfen das der auch im hintergrund aktualisiert und push notification schickt
 
     // Eine suspend-Funktion, die News von der API abruft und in die Datenbank einfügt.
     suspend fun getNews() {

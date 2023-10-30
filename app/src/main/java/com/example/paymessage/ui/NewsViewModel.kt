@@ -23,7 +23,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private val tagesschauDatabase = TagesschauDataBase(application)
 
     // Instanz des Repository-Callbacks
-    private val repositoryCallback = NewsRepositoryCallback()
+    private val repositoryCallback = NewsRepositoryCallback(application)
 
     // Instanz des Repositories, das die Schnittstelle zwischen Datenbank und API bildet.
     private val repository = AppRepository(application, repositoryCallback, TagesschauApi, tagesschauDatabase)

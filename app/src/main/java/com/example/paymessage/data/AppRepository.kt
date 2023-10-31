@@ -64,25 +64,33 @@ class AppRepository(
     }
 
 
+    private var databaseChanged = false
     private fun observeDatabase() {
         newsDataList.observeForever { newsList ->
             // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert
-            if (newsList.isNotEmpty()) {
-                // Hier können Sie den Code für die Benachrichtigung implementieren
+            if (newsList.isNotEmpty() && !appInitialStart && databaseChanged) {
+                // Code für die Benachrichtigung implementieren
                 val notificationHandler = NotificationHandler(context)
                 notificationHandler.displayNotification("Neue Nachrichten", "Schau dir die aktuellen News an.")
             }
+            appInitialStart = false
+            databaseChanged = true
         }
     }
 
-
+    // Eine Variable, um den initialen Start der App zu verfolgen
+    private var appInitialStart = true
     private fun startDataUpdate() {
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 Log.d(TAG, "Automatische Aktualisierung gestartet")
                 // Führe hier Aktualisierungsaktionen über die API durch
+                if (!appInitialStart) {
                 fetchDataFromApiAndUpdateDB()
+                } else {
+                    appInitialStart = false
+                }
             }
         }, 0, UPDATE_INTERVAL)
     }
@@ -137,9 +145,9 @@ class AppRepository(
                             // Neue Daten in die Datenbank einfügen
                             insertNewsFromApi(new)
 
-                            // Push-Benachrichtigung senden, wenn neue Daten gefunden wurden
-                            val notificationHandler = NotificationHandler(context)
-                            notificationHandler.displayNotification("Neue Nachricht", "Es gibt neue Nachrichten.")
+//                            // Push-Benachrichtigung senden, wenn neue Daten gefunden wurden
+//                            val notificationHandler = NotificationHandler(context)
+//                            notificationHandler.displayNotification("Neue Nachricht", "Es gibt neue Nachrichten.")
                         }
                     }
                 } else {

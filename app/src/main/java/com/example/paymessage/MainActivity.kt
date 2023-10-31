@@ -1,18 +1,12 @@
 package com.example.paymessage
 
-
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ProgressBar
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.paymessage.data.pushNotification.NotificationTestActivity
 import com.example.paymessage.databinding.ActivityMainBinding
-import com.example.paymessage.ui.NewsViewModel
 import java.lang.Exception
 
 

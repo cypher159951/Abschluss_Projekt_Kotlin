@@ -21,7 +21,7 @@ class NotificationTestActivity : AppCompatActivity() {
         // Erstellen Sie eine Instanz von NotificationHandler mit dem Anwendungscontext.
         val notificationHandler = NotificationHandler(applicationContext)
         Log.d("pushTest", "push gestartet")
-        // Rufen Sie die Methode displayNotification auf, um eine Testbenachrichtigung zu senden.
+        // Rufe die Methode displayNotification auf, um eine Testbenachrichtigung zu senden.
         notificationHandler.displayNotification("Test Title", "Dies ist eine Testbenachrichtigung.")
         Log.d("pushTest2", "push test angekommen")
     }

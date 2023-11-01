@@ -73,7 +73,9 @@ class ArtikelFragment : Fragment() {
                         "</em>" to "",
                         "<strong>" to "",
                         "</strong>" to "",
-                        "<a" to ""
+                        "</a" to "",
+                        "<br" to "",
+                        "/>" to ""
                     )
 
                     var filteredHtml = htmlCode
@@ -82,21 +84,6 @@ class ArtikelFragment : Fragment() {
                     }
                     binding.artikelTV.text = filteredHtml
 
-
-//                    val htmlCode = text
-//                    binding.artikelTV.text = htmlCode
-//                        .replace("<ul", "")
-//                        .replace("<li", "")
-//                        .replace("</li", " ")
-//                        .replace("</ul>", "")
-//                        .replace("<h2>", "")
-//                        .replace("</h2>", "n")
-//                        .replace(">>", "\n\n")
-//                        .replace("<em>", "")
-//                        .replace("</em>", "")
-//                        .replace("<strong>", "")
-
-                    //   binding.artikelTV.text = text
 
                     // Laden und Anzeigen des Teaser-Bilds des Artikels.
                     binding.artikelImageIV.load(it.teaserImage.imageVariants.image144)

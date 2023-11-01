@@ -1,11 +1,13 @@
 package com.example.paymessage
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.paymessage.data.pushNotification.NotificationTestActivity
 import com.example.paymessage.databinding.ActivityMainBinding
 import java.lang.Exception
 
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     // Die Methode, die aufgerufen wird, wenn die Aktivität erstellt wird.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-  // startNotificationTestActivity()
+ //  startNotificationTestActivity()
 
         // Einrichten der View-Bindung für die Aktivität.
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -89,11 +91,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
 //        private fun startNotificationTestActivity() {
 //        val intent = Intent(this, NotificationTestActivity::class.java)
 //        startActivity(intent)
 //    }
-
 }
 
 

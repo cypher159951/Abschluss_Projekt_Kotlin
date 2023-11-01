@@ -94,9 +94,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     // Funktion für pull-to-refresh, um die neuesten News abzurufen.
     fun refreshNews() {
         viewModelScope.launch(Dispatchers.IO) {
-
             repository.getNews()
-
         }
     }
 }

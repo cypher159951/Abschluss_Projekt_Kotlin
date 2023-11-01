@@ -12,7 +12,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="30dp"
         android:text="Nachrichten"
-        android:textColor="#FCB84444"
+        android:textColor="?colorOnPrimary"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

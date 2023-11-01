@@ -14,7 +14,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF282B2E"
+    android:background="?colorPrimary"
     android:tag = "HF"
     tools:context="com.example.paymessage.ui.HomeFragment">
 
@@ -23,7 +23,7 @@
         android:id="@+id/toolbarHomeTB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF282B2E"
+        android:background="?colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NewsLetter"
-        android:textColor="#FCF8F8FA"
+        android:textColor="?colorOnPrimary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbarHomeTB"
         app:layout_constraintEnd_toEndOf="parent"

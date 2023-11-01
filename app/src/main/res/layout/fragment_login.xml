@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.LoginFragment"
-    android:background="#FF282B2E">
+    android:background="?colorPrimary">
 
     <EditText
         android:id="@+id/emailET"
@@ -14,9 +14,9 @@
         android:layout_marginTop="280dp"
         android:ems="10"
         android:hint="E-Mail"
-        android:textColor="#FCF3F3F6"
+        android:textColor="?colorOnPrimary"
         android:inputType="textEmailAddress"
-        android:textColorHint="#FCF6F6F8"
+        android:textColorHint="?colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:textColor="#FCF8F8FA"
-        android:textColorHint="#FCFDFDFD"
+        android:textColor="?colorOnPrimary"
+        android:textColorHint="?colorOnPrimary"
         android:hint="Passwort"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,9 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="80dp"
-        android:textColor="#F8F5F5"
+        android:textColor="?colorOnPrimary"
         android:text="Einloggen"
-        android:backgroundTint="#3A1D67"
+        android:backgroundTint="?colorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwortET" />
 

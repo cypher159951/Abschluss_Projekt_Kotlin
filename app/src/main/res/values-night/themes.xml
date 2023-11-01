@@ -3,8 +3,8 @@
     <style name="Base.Theme.PayMessage" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-        <item name="colorPrimary">#6639AF</item>
-        <item name="colorPrimaryDark">#2F815B</item>
-        <item name="android:textColor">#FCEDBC5A</item>
+        <item name="colorPrimary">@color/grey</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/BTNNight</item>
     </style>
 </resources>

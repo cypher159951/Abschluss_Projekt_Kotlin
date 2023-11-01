@@ -42,7 +42,7 @@ class SettingsFragment : Fragment() {
         }
         return binding.root
     }
-
+   //TODO Tag Nach modus button nachschauen das er auf nacht gespeichert bleibt und nicht zurück springt
 
     // Eine private Funktion, die den Nachtmodus je nach Status aktiviert oder deaktiviert.
     private fun setDarkMode(status: Boolean) {

@@ -14,6 +14,7 @@ import com.example.paymessage.data.datamodels.News
 import com.example.paymessage.data.datamodels.TagesschauDataBase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 // Eine Klasse, die als ViewModel für die News-Funktionalität der Anwendung fungiert.
@@ -94,9 +95,12 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     // Funktion für pull-to-refresh, um die neuesten News abzurufen.
     fun refreshNews() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getNews()
+            loadData()
+       //     repository.getNews()
         }
     }
+
+
 }
 
 

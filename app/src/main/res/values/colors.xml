@@ -10,7 +10,7 @@
     <color name="leichtLila">#393743</color>
     <color name="desert">#CFA58D</color>
 
-    <color name="colorPrimaryDay">@color/white</color>
+    <color name="colorPrimaryDay">#E60F0F</color>
     <color name="colorSecundaryDay">@color/lila</color>
 
     <color name="colorPrimaryNight">@color/grey</color>

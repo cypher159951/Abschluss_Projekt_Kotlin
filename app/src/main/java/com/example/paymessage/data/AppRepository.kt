@@ -2,6 +2,7 @@ package com.example.paymessage.data
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.SharedPreferences
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Handler
@@ -33,7 +34,8 @@ class AppRepository(
     private val context: Context,
     private val callback: RepositoryCallback,
     val api: TagesschauApi,
-    private val newsDatabase: TagesschauDataBase
+    private val newsDatabase: TagesschauDataBase,
+
 ) {
 
     // Mutable LiveData-Instanz für News-Objekte.
@@ -64,10 +66,13 @@ class AppRepository(
     }
 
 
+    // LiveData zur Verfolgung von Änderungen in der Datenbank
+   // private val isDatabaseUpdated = MutableLiveData(false)
+
     private var databaseChanged = false
     private fun observeDatabase() {
         newsDataList.observeForever { newsList ->
-            // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert
+            // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert      && isDatabaseUpdated.value == true
             if (newsList.isNotEmpty() && !appInitialStart && databaseChanged) {
                 // Code für die Benachrichtigung implementieren
                 val notificationHandler = NotificationHandler(context)
@@ -77,6 +82,9 @@ class AppRepository(
             databaseChanged = true
         }
     }
+
+
+
 
     // Eine Variable, um den initialen Start der App zu verfolgen
     private var appInitialStart = true
@@ -145,9 +153,9 @@ class AppRepository(
                             // Neue Daten in die Datenbank einfügen
                             insertNewsFromApi(new)
 
-//                            // Push-Benachrichtigung senden, wenn neue Daten gefunden wurden
-//                            val notificationHandler = NotificationHandler(context)
-//                            notificationHandler.displayNotification("Neue Nachricht", "Es gibt neue Nachrichten.")
+                           // Push-Benachrichtigung senden, wenn neue Daten gefunden wurden
+//                           val notificationHandler = NotificationHandler(context)
+//                           notificationHandler.displayNotification("Neue Nachricht", "Es gibt neue Nachrichten.")
                         }
                     }
                 } else {
@@ -155,6 +163,11 @@ class AppRepository(
                     for (oneNews in newsFromApi) {
                         insertNewsFromApi(oneNews)
                     }
+                }
+
+                // Verberge den Ladebalken oder die Ladekreis-Animation nach Abschluss des Ladevorgangs
+                handler.post {
+                    callback.hideLoading()
                 }
 
                 Log.d(TAG, "Automatische Aktualisierung erfolgreich")

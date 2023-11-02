@@ -1,6 +1,9 @@
 package com.example.paymessage.ui
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,39 +21,52 @@ class SettingsFragment : Fragment() {
     // Instanz des FireBaseViewModels, um die Firebase-Authentifizierung zu verwalten.
     val viewmodel: FireBaseViewModel by activityViewModels()
     private lateinit var binding: FragmentSettingsBinding
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     // Eine Variable, die den Status des Nachtmodus speichert.
-    private var isNightModeEnabled = false
-
+    private var isNightModusSwitchChecked = false
 
     // Die Methode, die das Layout des Fragments erstellt und zurückgibt.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Layout für das Fragment einrichten.
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        // Initialize SharedPreferences
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        binding.nachtModusSWITCH.isChecked = sharedPreferences.getBoolean("isChecked", false)
 
         // Die Sichtbarkeit der Bottom Navigation Bar auf der Hauptaktivität einstellen.
         (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.VISIBLE
-        
+
 
         // Setzen des Nachtmodus-Switch-Listeners.
+        binding.nachtModusSWITCH.isChecked = isNightModusSwitchChecked
         binding.nachtModusSWITCH.setOnCheckedChangeListener { _, isChecked ->
+            isNightModusSwitchChecked = isChecked
             setDarkMode(isChecked)
+            with(sharedPreferences.edit()) {
+                putBoolean("isChecked", isChecked)
+                apply()
+            }
         }
         return binding.root
     }
-   //TODO Tag Nach modus button nachschauen das er auf nacht gespeichert bleibt und nicht zurück springt
+
+
+    override fun onResume() {
+        super.onResume()
+        binding.nachtModusSWITCH.isChecked = sharedPreferences.getBoolean("isChecked", false)
+    }
+
 
     // Eine private Funktion, die den Nachtmodus je nach Status aktiviert oder deaktiviert.
-    private fun setDarkMode(status: Boolean) {
-        if (status) {
-            // Darkmode aktivieren
+    private fun setDarkMode(isNightModeEnabled: Boolean) {
+        if (isNightModeEnabled) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
-            // Darkmode deaktivieren
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }

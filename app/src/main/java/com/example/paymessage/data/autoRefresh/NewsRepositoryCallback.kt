@@ -9,10 +9,7 @@ import android.widget.ProgressBar
 
 class NewsRepositoryCallback(private val context: Context) : RepositoryCallback {
 
-
     private var progressDialog: Dialog? = null
-
-
 
     override fun showLoading() {
         if (context is Activity && !(context as Activity).isFinishing) {
@@ -24,7 +21,6 @@ class NewsRepositoryCallback(private val context: Context) : RepositoryCallback 
             Log.d("push benachrichtigung", " empfangen")
         }
     }
-
     override fun hideLoading() {
         progressDialog?.let {
             if (it.isShowing) {

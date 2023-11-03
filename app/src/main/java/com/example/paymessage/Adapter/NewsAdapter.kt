@@ -46,17 +46,10 @@ class NewsAdapter(
     }
 
 
-//    fun setData(newData: List<News>) {
-//        this.dataset = newData
-//        notifyDataSetChanged()
-//    }
-
-
     // Methode zum Festlegen der Anzahl von Elementen in der Liste
     override fun getItemCount(): Int {
         return dataset.size
     }
-
 
     // Methode zum Binden von Daten an die ViewHolders
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

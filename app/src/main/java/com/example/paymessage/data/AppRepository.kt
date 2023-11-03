@@ -29,6 +29,7 @@ const val TAG = "RepositoryTAG"
 // 30 Minuten in Millisekunden
 private const val UPDATE_INTERVAL: Long = 5000
 
+
 // Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 class AppRepository(
     private val context: Context,
@@ -106,7 +107,6 @@ class AppRepository(
 
     private fun fetchDataFromApiAndUpdateDB() {
 
-
         // Hier die Logik zum Abrufen von Daten von der API und Aktualisieren der lokalen Datenbank einfügen
         GlobalScope.launch(Dispatchers.IO) {
             val handler = Handler(Looper.getMainLooper())
@@ -122,22 +122,6 @@ class AppRepository(
                 // Löschen Sie alte Daten
                 deleteOldData()
 
-                //Mit dem ausgeklammerten zeigt er im LogCat alle daten an
-                //wenn die ausgeklammert sind und ich den unteren code verwende werden die daten nciht angezeigt
-
-//                // Füge die neuen Daten in die lokale Datenbank ein
-//                for (oneNews in newsFromApi) {
-//                    insertNewsFromApi(oneNews)
-//                }
-//
-//                // Simuliere einen Ladevorgang von 2-3 Sekunden
-//                delay(2000)
-//
-//                // Verberge den Ladebalken oder die Ladekreis-Animation nach Abschluss des Ladevorgangs
-//                handler.post {
-//                    callback.hideLoading()
-//               }
-
                 // Vergleiche die neuen Daten mit den in der Datenbank vorhandenen Daten
                 val oldNews = newsDataList.value
                 if (oldNews != null && oldNews.isNotEmpty()) {
@@ -152,10 +136,6 @@ class AppRepository(
                         if (isNew) {
                             // Neue Daten in die Datenbank einfügen
                             insertNewsFromApi(new)
-
-                           // Push-Benachrichtigung senden, wenn neue Daten gefunden wurden
-//                           val notificationHandler = NotificationHandler(context)
-//                           notificationHandler.displayNotification("Neue Nachricht", "Es gibt neue Nachrichten.")
                         }
                     }
                 } else {
@@ -209,17 +189,17 @@ class AppRepository(
     fun deleteOldData() {
 
         //Kalender erstellen
-        val twoDaysAgo = Calendar.getInstance()
-        //2 Tage vom aktuellen Datum zurück gehen
-        twoDaysAgo.add(Calendar.DAY_OF_YEAR, -5)
+        val daysAgo = Calendar.getInstance()
+        //7 Tage vom aktuellen Datum zurück gehen
+        daysAgo.add(Calendar.DAY_OF_YEAR, -7)
 
-        //Kalender umforamtieren damit es mit dem in der Datenbank übereinstimmt
-        val formattedTwoDaysAgo =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(twoDaysAgo.time)
+        //Kalender umformatieren damit es mit dem in der Datenbank übereinstimmt
+        val formattedDaysAgo =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(daysAgo.time)
 
-        //Daten aus der Datenbank löschen die älter als 2 Tage sind
+        //Daten aus der Datenbank löschen die älter als 7 Tage sind
         try {
-            newsDatabase.dao.deleteOldItems(formattedTwoDaysAgo)
+            newsDatabase.dao.deleteOldItems(formattedDaysAgo)
         } catch (e: Exception) {
             Log.e(TAG, "Error deleting old data from the database: $e")
         }

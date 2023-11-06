@@ -69,26 +69,35 @@ class AppRepository(
 
     // LiveData zur Verfolgung von Änderungen in der Datenbank
    // private val isDatabaseUpdated = MutableLiveData(false)
-
+    private var appInitialStart = true
     private var databaseChanged = false
     private fun observeDatabase() {
         newsDataList.observeForever { newsList ->
             // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert      && isDatabaseUpdated.value == true
             if (newsList.isNotEmpty() && !appInitialStart && databaseChanged) {
-                // Code für die Benachrichtigung implementieren
-                val notificationHandler = NotificationHandler(context)
-                notificationHandler.displayNotification("Neue Nachrichten", "Schau dir die aktuellen News an.")
+                if (isInitialData()) {
+                    // Code für die Benachrichtigung implementieren
+                    val notificationHandler = NotificationHandler(context)
+                    notificationHandler.displayNotification(
+                        "Neue Nachrichten", "Schau dir die aktuellen News an."
+                    )
+                }
             }
             appInitialStart = false
             databaseChanged = true
         }
     }
 
+    //Keine Pushbenachrichtigung beim Start der App
+    private fun isInitialData(): Boolean {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+        return sharedPreferences.getBoolean("IS_INITIAL_DATA", false)
+    }
 
 
 
     // Eine Variable, um den initialen Start der App zu verfolgen
-    private var appInitialStart = true
+
     private fun startDataUpdate() {
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {

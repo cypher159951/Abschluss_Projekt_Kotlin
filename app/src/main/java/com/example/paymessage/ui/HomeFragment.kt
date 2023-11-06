@@ -55,6 +55,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        // Scroll-To-Top-Button initialisieren und Klick-Listener hinzufügen
+        binding.scrollToTopBTN.setOnClickListener {
+            // Hier den RecyclerView nach oben scrollen
+            binding.newsListRV.smoothScrollToPosition(0)
+        }
+
         // Die Sichtbarkeit der Bottom Navigation Bar auf der Hauptaktivität einstellen.
         (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.VISIBLE
 
@@ -104,6 +111,9 @@ class HomeFragment : Fragment() {
                 binding.swipeRefreshLayout.isRefreshing = false
             }
         }
+
+
+
     }
 
 

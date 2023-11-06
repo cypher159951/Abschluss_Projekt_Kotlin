@@ -1,15 +1,17 @@
 package com.example.paymessage
 
-import android.content.Intent
+
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.paymessage.data.pushNotification.NotificationTestActivity
 import com.example.paymessage.databinding.ActivityMainBinding
 import java.lang.Exception
+
 
 
 // Die Hauptaktivität, die die verschiedenen Fragmente der Anwendung verwaltet.
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
  //  startNotificationTestActivity()
+
+
 
         // Einrichten der View-Bindung für die Aktivität.
         binding = ActivityMainBinding.inflate(layoutInflater)

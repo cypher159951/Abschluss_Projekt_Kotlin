@@ -68,7 +68,7 @@ class AppRepository(
 
 
     // LiveData zur Verfolgung von Änderungen in der Datenbank
-   // private val isDatabaseUpdated = MutableLiveData(false)
+    // private val isDatabaseUpdated = MutableLiveData(false)
     private var appInitialStart = true
     private var databaseChanged = false
     private fun observeDatabase() {

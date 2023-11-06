@@ -89,6 +89,8 @@ class NewsAdapter(
 
 
 
+
+
         // Bestimmt, ob der Artikel als Favorit markiert ist oder nicht
         val likeArtikel = if (item.isLiked) R.drawable.baseline_star_24
         else R.drawable.baseline_star_outline_24
@@ -104,7 +106,10 @@ class NewsAdapter(
             //Datenbank updaten
             viewModel.updateLikestatusInDb(like)
         }
+
     }
+
+
 }
 
 

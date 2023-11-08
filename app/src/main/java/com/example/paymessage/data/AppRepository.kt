@@ -237,12 +237,4 @@ class AppRepository(
     fun getliked(): LiveData<List<News>> {
         return newsDatabase.dao.getLiked()
     }
-
-
 }
-
-
-
-
-
-

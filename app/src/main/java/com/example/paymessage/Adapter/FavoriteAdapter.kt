@@ -1,5 +1,6 @@
 package com.example.paymessage.Adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -53,6 +54,27 @@ class FavoriteAdapter(
             holder.itemView.findNavController()
                 .navigate(FavoriteFragmentDirections.actionFavoriteFragmentToArtikelFragment(dataset[position].sophoraId!!))
         }
+
+
+        //Share Funktion
+        holder.binding.favoriteShareIV.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+
+            //Das "/api2u" aus der URL heraus filtern damit der link funktioniert
+            val updateUrl = item.updateCheckUrl.replace("/api2u", "")
+
+            //Den share Text bestimmen was beim teilen angezeigt werden soll
+            val shareText = "${item.title}\n${updateUrl}"
+
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
+            shareIntent.type = "text/plain"
+            val shareIntentChooser = Intent.createChooser(shareIntent, null)
+            holder.binding.root.context.startActivity(shareIntentChooser)
+        }
+
+
+
+
 
         // Überprüfen und Setzen des Favoriten-Symbols basierend auf dem "liked" Status
         val likeImageResource = if (item.isLiked) R.drawable.baseline_star_24

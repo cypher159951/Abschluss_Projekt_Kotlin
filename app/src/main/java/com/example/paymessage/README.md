@@ -1,5 +1,5 @@
 
-# payMessge
+# NewsLetter
 
 Eine Nachrichten App für alle die immer auf dem neusten Stand bleiben wollen.
 
@@ -35,6 +35,7 @@ Installieren Sie mein Projekt
 
 #### Get all items
 
+[Tageschau API](https://www.tagesschau.de/api2/homepage/)
 ```http
   https://www.tagesschau.de/api2/homepage/
 ```
@@ -50,7 +51,7 @@ Installieren Sie mein Projekt
 
 #### Wie lange bleiben Nachrichten zu sehen
 
-Du kannst du die Artikel 2 Tage sehen. Danach werden sie aus deiner Anzeige gelöscht.
+Du kannst die Artikel 2 Tage sehen. Danach werden sie aus deiner Anzeige gelöscht.
 
 #### Gibt es einen Tag / Nacht Modus ?
 

@@ -13,7 +13,6 @@ import com.example.paymessage.databinding.ActivityMainBinding
 import java.lang.Exception
 
 
-
 // Die Hauptaktivität, die die verschiedenen Fragmente der Anwendung verwaltet.
 class MainActivity : AppCompatActivity() {
 
@@ -27,8 +26,7 @@ class MainActivity : AppCompatActivity() {
     // Die Methode, die aufgerufen wird, wenn die Aktivität erstellt wird.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
- //  startNotificationTestActivity()
-
+        //  startNotificationTestActivity()
 
 
         // Einrichten der View-Bindung für die Aktivität.
@@ -93,7 +91,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
 
 //        private fun startNotificationTestActivity() {

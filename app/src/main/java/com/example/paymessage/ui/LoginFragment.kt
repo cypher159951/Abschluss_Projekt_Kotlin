@@ -1,10 +1,12 @@
 package com.example.paymessage.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.paymessage.MainActivity
@@ -16,7 +18,7 @@ import com.example.paymessage.databinding.FragmentLoginBinding
 class LoginFragment : Fragment() {
 
     // Instanz des FireBaseViewModels, um die Firebase-Authentifizierung zu verwalten.
-    val viewModel : FireBaseViewModel by activityViewModels()
+    val viewModel: FireBaseViewModel by activityViewModels()
 
     // Eine Instanz der View-Bindungsklasse für das Fragment.
     private lateinit var binding: FragmentLoginBinding
@@ -27,12 +29,12 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-
         // Die Sichtbarkeit der Bottom Navigation Bar auf der Hauptaktivität ausblenden.
         (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.GONE
 
+
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 
@@ -42,24 +44,36 @@ class LoginFragment : Fragment() {
 
         // Setzen von Click-Listenern für die Registrierungs- und Login-Schaltflächen.
         binding.registrierenBTN.setOnClickListener {
-            val email = binding.emailET.text.toString()
-            val passwort = binding.passwortET.text.toString()
-
-            viewModel.signUp(email,passwort)
+            try {
+                val email = binding.emailET.text.toString()
+                val passwort = binding.passwortET.text.toString()
+                viewModel.signUp(email, passwort)
+            } catch (e: Exception) {
+                Log.e("registrieren", "Fehler bei registrieren")
+                requireActivity().runOnUiThread {
+                    Toast.makeText(requireContext(), "Fehler", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         binding.loginBTN.setOnClickListener {
-            val email = binding.emailET.text.toString()
-            val passwort = binding.passwortET.text.toString()
-
-            viewModel.signIn(email, passwort)
+            try {
+                val email = binding.emailET.text.toString()
+                val passwort = binding.passwortET.text.toString()
+                viewModel.signIn(email, passwort)
+            } catch (e: Exception) {
+                Log.e("Login", "Fehler bei login")
+                  requireActivity().runOnUiThread {
+                Toast.makeText(requireContext(), "Fehler", Toast.LENGTH_SHORT).show()
+                  }
+            }
         }
 
-        // Überwachen des aktuellen Benutzers. Wenn vorhanden, navigiere zur Home-Ansicht.
-        viewModel.user.observe(viewLifecycleOwner){
-            if(it != null){
-                findNavController().navigate(R.id.homeFragment)
+            // Überwachen des aktuellen Benutzers. Wenn vorhanden, navigiere zur Home-Ansicht.
+            viewModel.user.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    findNavController().navigate(R.id.homeFragment)
+                }
             }
         }
     }
-}

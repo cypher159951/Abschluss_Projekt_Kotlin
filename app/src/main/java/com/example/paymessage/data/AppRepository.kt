@@ -17,45 +17,33 @@ import com.example.paymessage.data.datamodels.TagesschauDataBase
 import com.example.paymessage.data.pushNotification.NotificationHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
 
-// Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 const val TAG = "RepositoryTAG"
-
-// 30 Minuten in Millisekunden
 private const val UPDATE_INTERVAL: Long = 5000
 
 
-// Definiert ein Schlüsselwort für das Tagging von Lognachrichten.
 class AppRepository(
     private val context: Context,
     private val callback: RepositoryCallback,
     val api: TagesschauApi,
     private val newsDatabase: TagesschauDataBase,
 
-) {
+    ) {
 
-    // Mutable LiveData-Instanz für News-Objekte.
     private val _news = MutableLiveData<List<News>>()
-
-    // LiveData-Instanz, die von außerhalb lesbar ist und auf die _news verweist.
     val news: LiveData<List<News>>
         get() = _news
 
 
-    // Mutable LiveData-Instanz für ein einzelnes News-Objekt.
     private val _newsdetail = MutableLiveData<News>()
-
-    // LiveData-Instanz, die von außerhalb lesbar ist und auf _newsdetail verweist.
     val newsdetail: MutableLiveData<News>
         get() = _newsdetail
 
 
-    // LiveData-Liste von News-Objekten, die aus der Datenbank gelesen werden.
     var newsDataList: LiveData<List<News>>
 
 
@@ -68,15 +56,14 @@ class AppRepository(
 
 
     // LiveData zur Verfolgung von Änderungen in der Datenbank
-    // private val isDatabaseUpdated = MutableLiveData(false)
     private var appInitialStart = true
     private var databaseChanged = false
     private fun observeDatabase() {
         newsDataList.observeForever { newsList ->
-            // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert      && isDatabaseUpdated.value == true
+            // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert
             if (newsList.isNotEmpty() && !appInitialStart && databaseChanged) {
                 if (isInitialData() && hasNewNews(newsList)) {
-                    // Code für die Benachrichtigung implementieren
+                    //Benachrichtigung implementieren
                     val notificationHandler = NotificationHandler(context)
                     notificationHandler.displayNotification(
                         "Neue Nachrichten", "Schau dir die aktuellen News an."
@@ -89,12 +76,11 @@ class AppRepository(
     }
 
 
-
-
+    // Überprüfe, ob es neue Nachrichten gibt, die noch nicht angezeigt wurden
     private fun hasNewNews(newsList: List<News>): Boolean {
-        // Überprüfe, ob es neue Nachrichten gibt, die noch nicht angezeigt wurden
         val latestNewsId = newsList.firstOrNull()?.sophoraId ?: ""
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences =
+            context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
         val lastDisplayedNewsId = sharedPreferences.getString("LAST_DISPLAYED_NEWS_ID", "")
 
         return latestNewsId != lastDisplayedNewsId
@@ -102,14 +88,13 @@ class AppRepository(
 
     //Keine Pushbenachrichtigung beim Start der App
     private fun isInitialData(): Boolean {
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences =
+            context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
         return sharedPreferences.getBoolean("IS_INITIAL_DATA", false)
     }
 
 
-
-    // Eine Variable, um den initialen Start der App zu verfolgen
-
+    // Startet die automatische Aktualisierung der Daten von der API
     private fun startDataUpdate() {
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
@@ -117,7 +102,7 @@ class AppRepository(
                 Log.d(TAG, "Automatische Aktualisierung gestartet")
                 // Führe hier Aktualisierungsaktionen über die API durch
                 if (!appInitialStart) {
-                fetchDataFromApiAndUpdateDB()
+                    fetchDataFromApiAndUpdateDB()
                 } else {
                     appInitialStart = false
                 }
@@ -127,7 +112,6 @@ class AppRepository(
 
 
     private fun fetchDataFromApiAndUpdateDB() {
-
         // Hier die Logik zum Abrufen von Daten von der API und Aktualisieren der lokalen Datenbank einfügen
         GlobalScope.launch(Dispatchers.IO) {
             val handler = Handler(Looper.getMainLooper())
@@ -136,11 +120,10 @@ class AppRepository(
             handler.post {
                 callback.showLoading()
             }
-            try {
-                // Holen Sie die Daten von der API
-                val newsFromApi = api.retrofitService.getNews().news
 
-                // Löschen Sie alte Daten
+            try {
+                // Daten von der API abfragen
+                val newsFromApi = api.retrofitService.getNews().news
                 deleteOldData()
 
                 // Vergleiche die neuen Daten mit den in der Datenbank vorhandenen Daten
@@ -155,7 +138,6 @@ class AppRepository(
                             }
                         }
                         if (isNew) {
-                            // Neue Daten in die Datenbank einfügen
                             insertNewsFromApi(new)
                         }
                     }
@@ -172,7 +154,6 @@ class AppRepository(
                 handler.post {
                     callback.hideLoading()
                 }
-
                 Log.d(TAG, "Automatische Aktualisierung erfolgreich")
             } catch (e: Exception) {
                 Log.e(TAG, "Fehler bei der automatischen Aktualisierung: $e")
@@ -180,6 +161,7 @@ class AppRepository(
         }
     }
 
+    // Aktualisiert die zuletzt angezeigte Nachrichten-ID in den SharedPreferences.
     private fun updateLastDisplayedNewsId(lastDisplayedNewsId: String) {
         val sharedPreferences: SharedPreferences =
             context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
@@ -188,7 +170,7 @@ class AppRepository(
         editor.apply()
     }
 
-    // Eine suspend-Funktion, die News von der API abruft und in die Datenbank einfügt.
+    //News von  API abrufen und in die Datenbank einfügen
     suspend fun getNews() {
         deleteOldData()
         try {
@@ -203,7 +185,7 @@ class AppRepository(
     }
 
 
-    // Eine Funktion, die ein einzelnes News-Objekt in die Datenbank einfügt.
+    // Einzelnes News-Objekt in die Datenbank einfügen
     fun insertNewsFromApi(itemData: News) {
         try {
             GlobalScope.launch {
@@ -242,7 +224,7 @@ class AppRepository(
     }
 
 
-    // Eine Funktion, die den Like-Status eines News-Objekts in der Datenbank aktualisiert.
+    // Like-Status eines News-Objekts in der Datenbank aktualisieren
     fun updateLikeStatus(isLike: News) {
         try {
             GlobalScope.launch {
@@ -254,7 +236,7 @@ class AppRepository(
     }
 
 
-    // Eine Funktion, die alle als 'liked' markierten News-Objekte aus der Datenbank abruft.
+    // Alle als 'liked' markierten News-Objekte aus der Datenbank abrufen
     fun getliked(): LiveData<List<News>> {
         return newsDatabase.dao.getLiked()
     }

@@ -7,7 +7,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 
 class NotificationHandler(private val context: Context) {
-
     private val CHANNEL_ID = "my_channel"
 
     fun displayNotification(title: String, message: String) {

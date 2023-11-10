@@ -6,7 +6,6 @@ import com.example.paymessage.data.database.Tagesschau
 import com.squareup.moshi.Json
 import java.net.URL
 
-
 /**
  * Eine Datenklasse, die eine Tabelle in der Datenbank repräsentiert und Nachrichteninformationen enthält.
  * @param sophoraId Die ID des Nachrichtenelements.
@@ -29,12 +28,8 @@ data class News(
     val teaserImage: TeaserImage,
     val updateCheckUrl: String,
 
-
-
     var isLiked: Boolean = false,
-    )
-
-
+)
 
 /**
  * Eine Datenklasse, die ein Bild in verschiedenen Größen repräsentiert.

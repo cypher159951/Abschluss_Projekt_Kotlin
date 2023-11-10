@@ -17,13 +17,9 @@ import com.example.paymessage.data.database.Converter
 @TypeConverters(Converter::class)
 abstract class TagesschauDataBase : RoomDatabase() {
     abstract val dao: TagesschauDataBaseDao
-
 }
 
-// Erstellen einer Instanz der Datenbank
 private lateinit var INSTANCE: TagesschauDataBase
-
-
 
 /**
  * Eine Funktion zur Erstellung der Tagesschau-Datenbank.

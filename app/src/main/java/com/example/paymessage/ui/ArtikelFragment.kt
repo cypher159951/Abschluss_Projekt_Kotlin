@@ -8,20 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
-import com.example.paymessage.data.AppRepository
 import com.example.paymessage.databinding.FragmentArtikelBinding
 
-// Ein Fragment, das dazu dient, einen einzelnen Artikel in der Anwendung anzuzeigen.
 class ArtikelFragment : Fragment() {
-
     // Initialisierung des ViewModels, das für die Anzeige des Artikels verantwortlich ist.
     private val viewModel: NewsViewModel by activityViewModels()
-
-    // Eine Instanz der View-Bindungsklasse für das Fragment.
     private lateinit var binding: FragmentArtikelBinding
 
-
-    // Die Methode, die das Layout des Fragments erstellt und zurückgibt.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,10 +24,8 @@ class ArtikelFragment : Fragment() {
     }
 
 
-    // Die Methode, die aufgerufen wird, nachdem die Ansicht des Fragments erstellt wurde.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         // Überprüfen, ob Argumente vorhanden sind, und Laden der Detailinformationen für den Artikel.
         arguments?.let {
@@ -45,21 +36,18 @@ class ArtikelFragment : Fragment() {
             viewModel.newsDetail.observe(viewLifecycleOwner) {
                 if (it.content.isNotEmpty()) {
 
-
+                    //Titel des Artikels anzeigen
                     val htmlCodeTitle = it.content[0].value
                     binding.titleArtikelTV.text =
                         htmlCodeTitle.replace("<strong>", "").replace("</strong>", "")
-                    // Setzen des Titels und Inhalts des Artikels in die entsprechenden Ansichtselemente.
-                    //   binding.titleArtikelTV.text = it.content[0].value
 
+                    // Verarbeiten und Anzeigen des Inhalt vom Artikel
                     var text: String = ""
                     for (i in 1..it.content.size - 1) {
                         text += it.content[i].value
                     }
 
-
-                    // Hier iteriere ich durch diese Liste und führe die Ersetzungen in filteredHtml durch.
-                    // Das Ergebnis wird dann dem artikelTV zugewiesen.
+                    // Bestimmte HTML Tags ersetzen
                     val htmlCode = text
                     val replacements = listOf(
                         "<ul" to "",
@@ -84,14 +72,12 @@ class ArtikelFragment : Fragment() {
                     }
                     binding.artikelTV.text = filteredHtml
 
-
                     // Laden und Anzeigen des Teaser-Bilds des Artikels.
                     binding.artikelImageIV.load(it.teaserImage.imageVariants.image144)
                 }
             }
         }
 
-        // Setzen des Klick-Listeners für die Zurück-Schaltfläche, um zur vorherigen Ansicht zu navigieren.
         binding.backBTNIV.setOnClickListener {
             val navController = findNavController()
             navController.navigate(ArtikelFragmentDirections.actionArtikelFragmentToHomeFragment())

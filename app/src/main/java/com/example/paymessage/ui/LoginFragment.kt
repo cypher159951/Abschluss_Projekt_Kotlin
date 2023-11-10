@@ -12,45 +12,38 @@ import com.example.paymessage.MainActivity
 import com.example.paymessage.R
 import com.example.paymessage.databinding.FragmentLoginBinding
 
-
-// Ein Fragment, das für die Anzeige und Verarbeitung des Login-Vorgangs verantwortlich ist.
 class LoginFragment : Fragment() {
 
     // Instanz des FireBaseViewModels, um die Firebase-Authentifizierung zu verwalten.
     val viewModel: FireBaseViewModel by activityViewModels()
-
-    // Eine Instanz der View-Bindungsklasse für das Fragment.
     private lateinit var binding: FragmentLoginBinding
 
-
-    // Die Methode, die das Layout des Fragments erstellt und zurückgibt.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Die Sichtbarkeit der Bottom Navigation Bar auf der Hauptaktivität ausblenden.
         (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.GONE
-
-
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-
-    // Die Methode, die aufgerufen wird, nachdem die Ansicht des Fragments erstellt wurde.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Setzen von Click-Listenern für die Registrierungs- und Login-Schaltflächen.
         binding.registrierenBTN.setOnClickListener {
             val email = binding.emailET.text.toString()
             val passwort = binding.passwortET.text.toString()
 
             //Überprüfen ob Email und Passwort feld ausgefüllt sind
-            if (email.isNotEmpty() && passwort.isNotEmpty() && passwort.length >= 6 ) {
+            if (email.isNotEmpty() && passwort.isNotEmpty() && passwort.length >= 6) {
                 viewModel.signUp(email, passwort)
             } else {
-                Toast.makeText(requireContext(), "Felder müssen ausgefüllt sein. \nPasswort mindestens 6 Zeichen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Felder müssen ausgefüllt sein. \nPasswort mindestens 6 Zeichen",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
@@ -60,10 +53,14 @@ class LoginFragment : Fragment() {
             val passwort = binding.passwortET.text.toString()
 
             //Überprüfen ob Email und Passwort feld ausgefüllt sind
-            if (email.isNotEmpty() && passwort.isNotEmpty() && passwort.length >= 6 ){
+            if (email.isNotEmpty() && passwort.isNotEmpty() && passwort.length >= 6) {
                 viewModel.signIn(email, passwort)
             } else {
-                Toast.makeText(requireContext(), "Felder müssen ausgefüllt sein. \nPasswort mindestens 6 Zeichen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Felder müssen ausgefüllt sein. \nPasswort mindestens 6 Zeichen",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }

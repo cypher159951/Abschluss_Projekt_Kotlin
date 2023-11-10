@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -14,49 +13,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.paymessage.Adapter.NewsAdapter
 import com.example.paymessage.MainActivity
 import com.example.paymessage.R
-import com.example.paymessage.data.autoRefresh.RepositoryCallback
 import com.example.paymessage.databinding.FragmentHomeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
-// Ein Fragment, das die Startseite der Anwendung darstellt.
 class HomeFragment : Fragment() {
-
-    private lateinit var progressBar: ProgressBar
-
-    // Instanz des NewsViewModels, um die News-Daten zu verwalten.
     private val newsViewModel: NewsViewModel by activityViewModels()
-
-    // Instanz des FireBaseViewModels, um die Firebase-Daten zu verwalten.
     val viewModel: FireBaseViewModel by activityViewModels()
-
-    // Eine Instanz der View-Bindungsklasse für das Fragment.
     private lateinit var binding: FragmentHomeBinding
 
-
-    // Die Methode, die das Layout des Fragments erstellt und zurückgibt.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-
-
-
     }
 
-
-
-    // Die Methode, die aufgerufen wird, nachdem die Ansicht des Fragments erstellt wurde.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        // Scroll-To-Top-Button initialisieren und Klick-Listener hinzufügen
+        // Scroll to Top Button
         binding.scrollToTopBTN.setOnClickListener {
             // Hier den RecyclerView nach oben scrollen
             binding.newsListRV.smoothScrollToPosition(0)
@@ -65,7 +44,6 @@ class HomeFragment : Fragment() {
         // Die Sichtbarkeit der Bottom Navigation Bar auf der Hauptaktivität einstellen.
         (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.VISIBLE
 
-        // Einrichten des RecyclerViews für die Liste der Nachrichten.
         val recyclerView = binding.newsListRV
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -75,11 +53,8 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.loginFragment)
         }
 
-
-        // Beobachten der Liste von Nachrichten und Aktualisieren des RecyclerView-Adapters entsprechend.
         binding.newsListRV.setHasFixedSize(true)
         newsViewModel.newsDataList.observe(viewLifecycleOwner) {
-
             binding.newsListRV.adapter =
                 NewsAdapter(
                     newsViewModel,
@@ -102,20 +77,14 @@ class HomeFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 // Warte für delayMillis in Millisekunden
                 delay(delayMillis)
-
                 //Rufe die refreshNews-Methode auf
                 newsViewModel.refreshNews()
                 Log.d("refreshtest2", "refreshfinish")
-
                 // Setze swipeRefreshLayout.isRefreshing auf false
                 binding.swipeRefreshLayout.isRefreshing = false
             }
         }
-
-
-
     }
-
 
     // Die Position der RecyclerView-Liste speichern, um sie bei Bedarf wiederherstellen zu können.
     override fun onDestroyView() {
@@ -123,9 +92,4 @@ class HomeFragment : Fragment() {
         listState?.let { newsViewModel.saveListState(it) }
         super.onDestroyView()
     }
-
 }
-
-
-
-

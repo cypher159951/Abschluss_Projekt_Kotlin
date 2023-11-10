@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
-// Eine ViewModel-Klasse, die die Interaktion mit Firebase-Authentifizierung und Firestore-Datenbank handhabt.
+// Interaktion mit Firebase-Authentifizierung und Firestore-Datenbank
 class FireBaseViewModel : ViewModel() {
 
     // Initialisierung von Firebase-Authentifizierung und Firestore-Instanzen.
@@ -32,13 +32,11 @@ class FireBaseViewModel : ViewModel() {
     // Funktion, die aufgerufen wird, um die Umgebung des Benutzers einzurichten.
     fun setupUserEnv() {
         _user.value = firebaseAuth.currentUser
-
         firebaseAuth.currentUser?.let {
             // Lege Profildaten an, wenn ein Benutzer angemeldet ist.
             profileRef = firestore.collection("Profile").document(firebaseAuth.currentUser!!.uid)
         }
     }
-
 
     // Funktion zum Registrieren eines neuen Benutzers.
     fun signUp(email: String, password: String, extra: String = "") {
@@ -54,7 +52,7 @@ class FireBaseViewModel : ViewModel() {
     // Funktion zum Abmelden des Benutzers.
     fun signOut() {
         firebaseAuth.signOut()
-        _user.value = firebaseAuth.currentUser // = null
+        _user.value = firebaseAuth.currentUser
     }
 
     // Funktion zum Anmelden des Benutzers.

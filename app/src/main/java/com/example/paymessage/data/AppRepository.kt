@@ -75,7 +75,7 @@ class AppRepository(
         newsDataList.observeForever { newsList ->
             // Hier wird der Code ausgeführt, wenn sich die Datenbank ändert      && isDatabaseUpdated.value == true
             if (newsList.isNotEmpty() && !appInitialStart && databaseChanged) {
-                if (isInitialData()) {
+                if (isInitialData() && hasNewNews(newsList)) {
                     // Code für die Benachrichtigung implementieren
                     val notificationHandler = NotificationHandler(context)
                     notificationHandler.displayNotification(
@@ -86,6 +86,18 @@ class AppRepository(
             appInitialStart = false
             databaseChanged = true
         }
+    }
+
+
+
+
+    private fun hasNewNews(newsList: List<News>): Boolean {
+        // Überprüfe, ob es neue Nachrichten gibt, die noch nicht angezeigt wurden
+        val latestNewsId = newsList.firstOrNull()?.sophoraId ?: ""
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+        val lastDisplayedNewsId = sharedPreferences.getString("LAST_DISPLAYED_NEWS_ID", "")
+
+        return latestNewsId != lastDisplayedNewsId
     }
 
     //Keine Pushbenachrichtigung beim Start der App
@@ -147,6 +159,8 @@ class AppRepository(
                             insertNewsFromApi(new)
                         }
                     }
+                    // Aktualisiere die zuletzt angezeigte Nachrichten-ID
+                    updateLastDisplayedNewsId(oldNews.firstOrNull()?.sophoraId ?: "")
                 } else {
                     // Wenn die Datenbank leer ist, füge einfach alle Daten hinzu
                     for (oneNews in newsFromApi) {
@@ -166,6 +180,13 @@ class AppRepository(
         }
     }
 
+    private fun updateLastDisplayedNewsId(lastDisplayedNewsId: String) {
+        val sharedPreferences: SharedPreferences =
+            context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("LAST_DISPLAYED_NEWS_ID", lastDisplayedNewsId)
+        editor.apply()
+    }
 
     // Eine suspend-Funktion, die News von der API abruft und in die Datenbank einfügt.
     suspend fun getNews() {

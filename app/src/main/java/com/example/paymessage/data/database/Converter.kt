@@ -40,7 +40,6 @@ class Converter {
         return gson.toJson(list)
     }
 
-
     //--------------------------------------------------------------------------------------------
     // Methode zur Konvertierung von String in eine Liste von Content-Objekten
     @TypeConverter
@@ -55,6 +54,4 @@ class Converter {
         val gson = Gson()
         return gson.toJson(list)
     }
-
-
 }

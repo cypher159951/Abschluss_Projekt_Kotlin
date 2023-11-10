@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.paymessage.MainActivity
+import com.example.paymessage.data.SharedPreferences.AppPreferences
 import com.example.paymessage.databinding.FragmentSettingsBinding
 
 
@@ -22,6 +23,7 @@ class SettingsFragment : Fragment() {
     val viewmodel: FireBaseViewModel by activityViewModels()
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var appPreferences: AppPreferences
 
 
     // Eine Variable, die den Status des Nachtmodus speichert.
@@ -32,11 +34,15 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        // Initialize AppPreferences
+        appPreferences = AppPreferences(requireContext())
+
         // Layout für das Fragment einrichten.
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         // Initialize SharedPreferences
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        binding.nachtModusSWITCH.isChecked = sharedPreferences.getBoolean("isChecked", false)
+        binding.nachtModusSWITCH.isChecked = appPreferences.isNightModeEnabled
 
         // Die Sichtbarkeit der Bottom Navigation Bar auf der Hauptaktivität einstellen.
         (requireActivity() as MainActivity).binding.bottomNavigationView.visibility = View.VISIBLE
@@ -45,12 +51,13 @@ class SettingsFragment : Fragment() {
         // Setzen des Nachtmodus-Switch-Listeners.
         binding.nachtModusSWITCH.isChecked = isNightModusSwitchChecked
         binding.nachtModusSWITCH.setOnCheckedChangeListener { _, isChecked ->
-            isNightModusSwitchChecked = isChecked
+         //   isNightModusSwitchChecked = isChecked
             setDarkMode(isChecked)
-            with(sharedPreferences.edit()) {
-                putBoolean("isChecked", isChecked)
-                apply()
-            }
+            appPreferences.isNightModeEnabled = isChecked
+//            with(sharedPreferences.edit()) {
+//                putBoolean("isChecked", isChecked)
+//                apply()
+//            }
         }
         return binding.root
     }
@@ -58,7 +65,7 @@ class SettingsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.nachtModusSWITCH.isChecked = sharedPreferences.getBoolean("isChecked", false)
+        binding.nachtModusSWITCH.isChecked = appPreferences.isNightModeEnabled
     }
 
 

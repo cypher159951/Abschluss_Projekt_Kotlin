@@ -1,7 +1,6 @@
 package com.example.paymessage.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,36 +43,36 @@ class LoginFragment : Fragment() {
 
         // Setzen von Click-Listenern für die Registrierungs- und Login-Schaltflächen.
         binding.registrierenBTN.setOnClickListener {
-            try {
-                val email = binding.emailET.text.toString()
-                val passwort = binding.passwortET.text.toString()
+            val email = binding.emailET.text.toString()
+            val passwort = binding.passwortET.text.toString()
+
+            //Überprüfen ob Email und Passwort feld ausgefüllt sind
+            if (email.isNotEmpty() && passwort.isNotEmpty() && passwort.length >= 6 ) {
                 viewModel.signUp(email, passwort)
-            } catch (e: Exception) {
-                Log.e("registrieren", "Fehler bei registrieren")
-                requireActivity().runOnUiThread {
-                    Toast.makeText(requireContext(), "Fehler", Toast.LENGTH_SHORT).show()
-                }
+            } else {
+                Toast.makeText(requireContext(), "Felder müssen ausgefüllt sein. \nPasswort mindestens 6 Zeichen", Toast.LENGTH_SHORT).show()
             }
+
         }
 
         binding.loginBTN.setOnClickListener {
-            try {
-                val email = binding.emailET.text.toString()
-                val passwort = binding.passwortET.text.toString()
+            val email = binding.emailET.text.toString()
+            val passwort = binding.passwortET.text.toString()
+
+            //Überprüfen ob Email und Passwort feld ausgefüllt sind
+            if (email.isNotEmpty() && passwort.isNotEmpty() && passwort.length >= 6 ){
                 viewModel.signIn(email, passwort)
-            } catch (e: Exception) {
-                Log.e("Login", "Fehler bei login")
-                  requireActivity().runOnUiThread {
-                Toast.makeText(requireContext(), "Fehler", Toast.LENGTH_SHORT).show()
-                  }
+            } else {
+                Toast.makeText(requireContext(), "Felder müssen ausgefüllt sein. \nPasswort mindestens 6 Zeichen", Toast.LENGTH_SHORT).show()
             }
+
         }
 
-            // Überwachen des aktuellen Benutzers. Wenn vorhanden, navigiere zur Home-Ansicht.
-            viewModel.user.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    findNavController().navigate(R.id.homeFragment)
-                }
+        // Überwachen des aktuellen Benutzers. Wenn vorhanden, navigiere zur Home-Ansicht.
+        viewModel.user.observe(viewLifecycleOwner) {
+            if (it != null) {
+                findNavController().navigate(R.id.homeFragment)
             }
         }
     }
+}

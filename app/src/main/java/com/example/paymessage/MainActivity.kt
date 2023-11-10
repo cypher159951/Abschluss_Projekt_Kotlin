@@ -6,9 +6,11 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.paymessage.data.SharedPreferences.AppPreferences
 import com.example.paymessage.databinding.ActivityMainBinding
 import java.lang.Exception
 
@@ -27,6 +29,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //  startNotificationTestActivity()
+
+
+        //Um im Nachmodus zu starten wenn es zuletzt gespeichert / eingestellt war
+        val nightModeEnabled = AppPreferences.getNightMode(this)
+        setNightMode(nightModeEnabled)
 
 
         // Einrichten der View-Bindung für die Aktivität.
@@ -90,6 +97,16 @@ class MainActivity : AppCompatActivity() {
             Log.e("Settings", "${e}")
         }
 
+    }
+
+
+    //Funktion für nachtmodus, checken ob nachmodus an oder aus war
+    private fun setNightMode(isNightModeEnabled: Boolean) {
+        if (isNightModeEnabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
 

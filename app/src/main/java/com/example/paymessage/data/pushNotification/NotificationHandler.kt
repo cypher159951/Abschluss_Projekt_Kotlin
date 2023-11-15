@@ -5,14 +5,18 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.example.paymessage.R
 
 class NotificationHandler(private val context: Context) {
     private val CHANNEL_ID = "my_channel"
 
     fun displayNotification(title: String, message: String) {
+
+        // Wird benötigt um Machrichten zu erstellen und zu Verwalten
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        // Überprüft welche ndroid Version installiert ist
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "My Channel"
             val descriptionText = "My Channel Description"

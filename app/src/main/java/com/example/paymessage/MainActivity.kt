@@ -15,10 +15,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     lateinit var binding: ActivityMainBinding
 
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Um im Nachmodus zu starten wenn es zuletzt gespeichert / eingestellt war
+        //Um im Nachtmodus zu starten wenn es zuletzt gespeichert / eingestellt war
         val nightModeEnabled = AppPreferences.getNightMode(this)
         setNightMode(nightModeEnabled)
 
